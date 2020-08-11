@@ -14,7 +14,7 @@ namespace Minesweeper_Web_Application.Controllers
         public string Index()
         {
             //return View();
-            return @"<b>Just a test from reg Index</b>";
+            return @"<b>Just a test from reg Index THIS IS AN ADDITIONAL TEST</b>";
         }
 
         [HttpPost]
