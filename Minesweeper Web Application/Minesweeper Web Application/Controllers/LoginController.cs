@@ -11,10 +11,9 @@ namespace Minesweeper_Web_Application.Controllers
     public class LoginController : Controller
     {
         // GET: Login
-        public string Index()
+        public ActionResult Index()
         {
-            //return View("Login");
-            return @"<b>Just a test # 2 from login Index</b>";
+            return View("Login");
         }
 
         [HttpPost]

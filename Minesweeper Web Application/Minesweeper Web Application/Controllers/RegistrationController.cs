@@ -11,10 +11,9 @@ namespace Minesweeper_Web_Application.Controllers
     public class RegistrationController : Controller
     {
         // GET: Registration
-        public string Index()
+        public ActionResult Index()
         {
-            //return View();
-            return @"<b>Just a test from reg Index THIS IS AN ADDITIONAL TEST</b>";
+            return View("Registration");
         }
 
         [HttpPost]
