@@ -10,6 +10,7 @@ namespace Minesweeper_Web_Application.Controllers
 {
     public class LoginController : Controller
     {
+        public string testing = "THIS IS A TEST FOR THE VIDEO!";
         // GET: Login
         public ActionResult Index()
         {
