@@ -15,7 +15,7 @@ namespace Minesweeper_Web_Application.Services.Business
             return service.RegisterUser(user);
         }
 
-        public bool Authenticate(UserModel user)
+        public bool Authenticate(UserLoginModel user)
         {
             return service.FindByUser(user);
         }
