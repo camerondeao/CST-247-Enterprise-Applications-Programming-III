@@ -29,10 +29,12 @@ namespace Minesweeper_Web_Application.Controllers
 
             if (results)
             {
+                System.Diagnostics.Debug.WriteLine("Login passed!");
                 return View("LoginPassed");
             }
             else
             {
+                System.Diagnostics.Debug.WriteLine("Login failed!");
                 return View("LoginFailed");
             }
         }

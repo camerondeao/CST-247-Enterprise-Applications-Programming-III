@@ -13,25 +13,34 @@ namespace Minesweeper_Web_Application.Controllers
         // GET: Registration
         public ActionResult Index()
         {
+            System.Diagnostics.Debug.WriteLine("Inside Registrationcontroller Index method");
             return View("Registration");
         }
 
         [HttpPost]
         public ActionResult RegisterAccount(UserModel model)
         {
+            System.Diagnostics.Debug.WriteLine("Inside RegistrationController RegisterAccount");
             SecurityService service = new SecurityService();
-            //Pass the UserModel in the service.Register() call.
+
             bool results = service.Register(model);
+
             if (results)
             {
-                return View("Login");
+                //Clearing fields before entering Login.cshtml
+                ModelState.Clear();
+
+                return View("/Views/Login/Login.cshtml");
             }
             else
             {
-                //Change this return view if necessary.
-                //This fires in the event a user can't be registered to the database.
                 return View("Registration");
             }
+        }
+
+        public ActionResult Login()
+        {
+            return View("/Views/Login/Login.cshtml");
         }
     }
 }

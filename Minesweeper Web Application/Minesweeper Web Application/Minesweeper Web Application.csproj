@@ -141,6 +141,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Registration\Registration.cshtml" />
+    <Content Include="Views\Login\LoginPassed.cshtml" />
+    <Content Include="Views\Login\LoginFailed.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
