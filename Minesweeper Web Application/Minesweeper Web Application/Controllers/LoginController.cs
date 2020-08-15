@@ -10,7 +10,6 @@ namespace Minesweeper_Web_Application.Controllers
 {
     public class LoginController : Controller
     {
-        public string testing = "THIS IS A TEST FOR THE VIDEO!";
         // GET: Login
         public ActionResult Index()
         {
@@ -18,9 +17,9 @@ namespace Minesweeper_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(UserModel model)
+        public ActionResult Login(UserLoginModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View("Login");
             }
