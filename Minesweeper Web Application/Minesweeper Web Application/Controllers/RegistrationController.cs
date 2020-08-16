@@ -13,14 +13,12 @@ namespace Minesweeper_Web_Application.Controllers
         // GET: Registration
         public ActionResult Index()
         {
-            System.Diagnostics.Debug.WriteLine("Inside Registrationcontroller Index method");
             return View("Registration");
         }
 
         [HttpPost]
         public ActionResult RegisterAccount(UserModel model)
         {
-            System.Diagnostics.Debug.WriteLine("Inside RegistrationController RegisterAccount");
             SecurityService service = new SecurityService();
 
             bool results = service.Register(model);
