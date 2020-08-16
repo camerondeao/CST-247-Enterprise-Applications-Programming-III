@@ -13,7 +13,7 @@ namespace Minesweeper_Web_Application.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "LoginController");
+            return View("/Views/Login/Login.cshtml");
         }
     }
 }
