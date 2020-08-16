@@ -13,17 +13,9 @@ namespace Minesweeper_Web_Application
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Login",
-                url: "{Login}",
-                defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
-                name: "Registration",
-                url: "{Registration}/{Index}",
-                defaults: new { controller = "Registration", action = "Index", id = UrlParameter.Optional }
-            );
+            routes.MapRoute("defaults",
+                "{controller}/{action}/{id}",
+                new { id = UrlParameter.Optional });
 
             routes.MapRoute(
                 name: "Default",
