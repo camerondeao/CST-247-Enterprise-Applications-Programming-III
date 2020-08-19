@@ -1,0 +1,174 @@
+﻿@model Minesweeper_Web_Application.Models.GameBoardModel
+<link href="~/Content/GamePage.css" rel="stylesheet" type="text/css" />
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+</head>
+<body>
+    <div style="text-align:center; font-family:Arial; font-size:24pt; font-weight:bold; ">
+        @Html.Label("Play a game of MineSweeper")
+    </div>
+    <div class="grid" >
+
+        <figure class="gallery__item gallery__item--1">
+            <img src="~/Images/bomb.png" class="image" alt="Image 1">
+        </figure>
+        <figure class="gallery__item gallery__item--2">
+            <img src="~/Images/ms1.png" class="image" alt="Image 1">
+        </figure>
+        <figure class="gallery__item gallery__item--2">
+            <img src="~/Images/ms1.png" class="image" alt="Image 1">
+        </figure>
+        <figure class="gallery__item gallery__item--3"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--4"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--5"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--6"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--7"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--8"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--9"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--10"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--11"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--12"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--13"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--14"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--15"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--16"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--17"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--18"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--19"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--20"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--21"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--22"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--23"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--24"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--25"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--26"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--27"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--28"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--29"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--30"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--31"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--32"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--33"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--34"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--35"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--36"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--37"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--38"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--39"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--40"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--41"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--42"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--43"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--44"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--45"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--46"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--47"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--48"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--49"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--50"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--51"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--52"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--53"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--54"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--55"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--56"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--57"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--58"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--59"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--60"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--61"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--62"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--63"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--64"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--65"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--66"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--67"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--68"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--69"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--70"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--71"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--72"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--73"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--74"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--75"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--76"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--77"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--78"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--79"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--80"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--81"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--82"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--83"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--84"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--85"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--86"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--87"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--88"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--89"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--90"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--91"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--92"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--93"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--94"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--95"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--96"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--97"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--98"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--99"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--100"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--101"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--102"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--103"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--104"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--105"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--106"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--107"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--108"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--109"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--110"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--111"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--112"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--113"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--114"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--115"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--116"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--117"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--118"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--119"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--120"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--121"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--122"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--123"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--124"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--125"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--126"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--127"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--128"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--129"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--130"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--131"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--132"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--133"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--134"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--135"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--136"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--137"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--138"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--139"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--140"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--141"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--142"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+        <figure class="gallery__item gallery__item--143"> <img src="~/Images/Cover.jpg" class="image" alt="Image 1"></figure>
+
+    </div>
+
+
+ 
+
+</body>
+</html>
