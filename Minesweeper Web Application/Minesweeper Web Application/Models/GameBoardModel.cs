@@ -6,61 +6,102 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.UI.WebControls;
+using System.Drawing;
+using Image = System.Drawing.Image;
 
 namespace Minesweeper_Web_Application.Models
 {
     public class GameBoardModel
     {
-        
-        private const int rowSize = 12;
-        private const int columnSize = 12;
-     //   private bool bomb;//does square contain a bomb
-      //  private bool reveal;//has the square been revealed
+        List<GameSquareModel> gameBoard = new List<GameSquareModel>();
+        int rowSize;
+        int columnSize;
 
-        public bool[] bombPosition = new bool[rowSize*columnSize];//array position of placed bombs
-        public bool[] revealPosition = new bool[rowSize*columnSize];//array position of placed bombs
-
-
-        public int RowSize { get; set; }
-        public int ColumnSize { get; set; }
-        public bool Bomb { get; set; }
-        public bool Reveal { get; set; }
-
-        public GameBoardModel(){
-            ResetBoard();
+        public GameBoardModel(int r, int c)
+        {
+            GameSquareModel temp = new GameSquareModel();
+            rowSize = r;
+            columnSize = c;
+            for (int i = 0; i < r * c; i++)
+            {
+                temp = new GameSquareModel();
+                gameBoard.Add(temp);
+                
+            }
+            ResetReveal();
         }
-        public int GetArraySize() {
+        public int GetBoardSize()
+        {
             return rowSize * columnSize;
         }
-        public void ResetBoard()//place new bombs.  Changes all Game squares reveals to false
+
+        public void PlaceBombs(int n)//set locations of bombs
         {
-            ResetReveal();//resets are square boolean reveal to false
-            PlaceBombs();
+            Random random = new Random();
+            for (int i = 0; i < n; i++)//Create an array of random positions to place boms in an one-dimensional array
+            {
+                int position = random.Next(1, GetBoardSize());
+                // while (gameBoard[position].Bomb == -1)
+                // {
+                //      position = random.Next(1, GetBoardSize());
+                //  }
+                // Console.Write(position + " ");
+                gameBoard[position].Bomb = -1;
+            }
+        }
+        public void SetReveal(int i, int e)//resets are square boolean reveal to false
+        {   
+                    gameBoard[i].Reveal = e;
         }
         public void ResetReveal()//resets are square boolean reveal to false
         {
-            for (int i = 0; i < GetArraySize(); i++) {
+            for (int i = 0; i < GetBoardSize(); i++)
+            {
 
                 {
-                    revealPosition[i] = false;
+                    gameBoard[i].Reveal = 9;
                 }
             }
         }
-        public bool[] PlaceBombs()//set locations of bombs
+        public int[] BombToArray()
         {
-            var array = Enumerable.Repeat<bool>(false, GetArraySize()).ToArray();
-            Random random = new Random();
-            int position;
-
-            for (int i=0; i< GetArraySize(); i++)//Create an array of random positions to place boms in an one-dimensional array
+            int[] array = new int[GetBoardSize()];
+            for (int i = 0; i < GetBoardSize(); i++)
             {
-                position = random.Next(1, GetArraySize());
-                if (array[position] == false) { array[position] = true; }
-                else { i--; }
+                array[i] = gameBoard[i].Bomb;
             }
-            Array.Copy(array, bombPosition, GetArraySize());
             return array;
         }
+        public int[] RevealToArray()
+        {
+            int[] array = new int[GetBoardSize()];
+            for (int i = 0; i < GetBoardSize(); i++)
+            {
+                array[i] = gameBoard[i].Reveal;
+            }
+            return array;
+        }
+
+        public void BombToString()
+        {
+            int count = 0;
+            Console.Write("\n\n\n");
+            for (int i = 0; i < GetBoardSize(); i++)
+            {
+                Console.Write(gameBoard[i].Bomb + " ");
+                if (++count == rowSize)
+                {
+                    Console.Write("\n");
+                    count = 0;
+                }
+            }
+            if (count > 0)
+            {
+                Console.Write("\n");
+            }
+        }
+       
+
 
     }
 }
