@@ -1,1 +1,61 @@
+﻿@*
+    Joey Cooper
+    Version 1
+    8-19-2020
+    Created the Home Page View with Radio Buttons to select which page to go to as well as routing the
+    Select button to the home page for testing purposes.
+*@
+
+@{
+    /**/
+    ViewBag.Title = "HomePageView";
+}
+
+@* Start creating the Form for the user *@
+<h2>Welcome to the Minesweeper Application!</h2>
+
+@using (Html.BeginForm("GetSelectedOption", "HomePage", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <h4>Please select one of the following options:</h4><hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @*
+            Form for Radio Buttons for the different pathways the client can select
+            For now, the Select button will route back to the Login page for testing purposes
+            This should include some if-else logic to choose the correct page per the user's selection.
+        *@
+        <form action = View("/Views/Login/Login.cshtml") >
+            <div class="form-group">
+                <div class="col-md-10">
+                    @* This should route to the Game View *@
+                    <input type="radio" id="playGame" name="homePageView" value="playGame">
+                    <label for="male">Play Minesweeper</label><br>
+
+                    @* This should route to the High Scores page *@
+                    <input type="radio" id="highScores" name="homePageView" value="highScores">
+                    <label for="male">View High Scores</label><br>
+
+                    @* This should route to a possible View Profile page *@
+                    <input type="radio" id="viewProfile" name="homePageView" value="viewProfile">
+                    <label for="male">View Your Profile</label><br>
+
+                    @* This should route back to the Home page *@
+                    <input type="radio" id="logout" name="homePageView" value="logout">
+                    <label for="male">Logout</label><br>
+
+                    @* Submit button to go to the different paths; it is not working as of this build *@
+                    <input type="submit" value="Select" class="btn btn-default" />
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    @* Hyperlink to the Login page *@
+    <div>
+        @Html.ActionLink("Back to Home", "Login")
+    </div>
+
+}
 
