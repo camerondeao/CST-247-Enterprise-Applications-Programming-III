@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "High Scores";
+}
+
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HighScores</title>
+    <style>
+        .headerText{
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .subHeaderText{
+            text-align: center;
+            font-size: 18px;
+        }
+        div {text-align: center;}
+
+        table, th, td{
+            border: 1px solid black;
+            margin:0 auto;
+            text-align: center;
+            width: 300px;
+        }
+    </style>
+</head>
+@using (Html.BeginForm("MainPage", "Home", FormMethod.Get))
+{ 
+<div>
+    @Html.Label("Minesweeper High Scores", htmlAttributes: new { @class = "headerText" })
+    <br />
+    @Html.Label("Please check back later for updated scores", htmlAttributes: new { @class = "subHeaderText" })
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-1 col-md-10">
+            <input type="submit" value="Home Page" class="btn btn-default" />
+        </div>
+    </div>
+    <br />
+    @Html.Label("High Scores Leaderboard", htmlAttributes: new { @class = "subHeaderText" })
+    <div>
+        <table>
+            <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Username</th>
+                <th scope="col">Score</th>
+            </tr>
+        </table>
+    </div>
+</div>
+}
