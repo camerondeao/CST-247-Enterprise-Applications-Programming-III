@@ -18,11 +18,11 @@ namespace Minesweeper_Web_Application.Models
                             //9: hidden
 
 
-
         public GameSquareModel() { bomb = 0; reveal = 9; }
         public int Bomb { get; set; }
         public int Reveal { get; set; }
 
+        public bool Visited { get; set; }
 
     }
 }

@@ -13,7 +13,7 @@ namespace Minesweeper_Web_Application.Controllers
     public class GameController : Controller
     {
 
-
+        // GET: Home
         public ActionResult Index()
         {
             int row = 12;

@@ -8,6 +8,10 @@ using System.Web;
 using System.Web.UI.WebControls;
 using System.Drawing;
 using Image = System.Drawing.Image;
+using System.Diagnostics;
+using Minesweeper_Web_Application.Services.Gameplay;
+using System.EnterpriseServices;
+using System.Web.UI;
 
 namespace Minesweeper_Web_Application.Models
 {
@@ -48,6 +52,13 @@ namespace Minesweeper_Web_Application.Models
                 // Console.Write(position + " ");
                 gameBoard[position].Bomb = -1;
             }
+
+            //Outputting to console for testing purposes.
+            BombToString();
+
+            //Calling services to convert to 2D array and place bombs.
+            GameplayService service = new GameplayService();
+            service.Convert2DArray(gameBoard, 12, 12);
         }
         public void SetReveal(int i, int e)//resets are square boolean reveal to false
         {   
@@ -85,23 +96,30 @@ namespace Minesweeper_Web_Application.Models
         public void BombToString()
         {
             int count = 0;
-            Console.Write("\n\n\n");
+            Debug.Write("\n\n\n");
+            Debug.WriteLine("Original List<GameSquareModel> board\n");
             for (int i = 0; i < GetBoardSize(); i++)
             {
-                Console.Write(gameBoard[i].Bomb + " ");
+                Debug.Write(gameBoard[i].Bomb + " ");
                 if (++count == rowSize)
                 {
-                    Console.Write("\n");
+                    Debug.Write("\n");
                     count = 0;
                 }
             }
             if (count > 0)
             {
-                Console.Write("\n");
+                Debug.Write("\n");
             }
+
+            Debug.WriteLine("\nCount of elements in original list: " + gameBoard.Count);
         }
-       
 
-
+        public void ViewChoice(int row, int col)
+        {
+            GameplayService service = new GameplayService();
+            gameBoard = service.SelectionServices(gameBoard, rowSize, columnSize, row, col);
+            //service.ChoiceIteration(gameBoard, row, col);
+        }
     }
 }
