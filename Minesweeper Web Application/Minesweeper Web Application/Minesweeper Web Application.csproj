@@ -161,6 +161,9 @@
     <Content Include="Views\Login\LoginFailed.cshtml" />
     <Content Include="Views\Game\Game.cshtml" />
     <Content Include="Views\Home\HomePageView.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Home\HighScores.cshtml" />
+    <Content Include="Views\Home\UserProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

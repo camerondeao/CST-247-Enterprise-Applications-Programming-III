@@ -2,6 +2,7 @@
 using Minesweeper_Web_Application.Services.Business;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -29,8 +30,11 @@ namespace Minesweeper_Web_Application.Controllers
 
             if (results)
             {
+                //UserManagement.Instance._loggedUser = model;
+                Debug.WriteLine("Logged in User: " + UserManagement.Instance._loggedUser.UserName);
                 System.Diagnostics.Debug.WriteLine("Login passed!");
-                return View("LoginPassed");
+                //return View("LoginPassed");
+                return RedirectToAction("MainPage", "Home");
             }
             else
             {

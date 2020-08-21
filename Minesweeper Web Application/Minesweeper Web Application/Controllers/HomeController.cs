@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.HtmlControls;
@@ -22,7 +23,7 @@ namespace Minesweeper_Web_Application.Controllers
         //GET: MainPage
         public ActionResult MainPage()
         {
-            return View("/Views/Home/HomePageView.cshtml");
+            return View("HomePageView", UserManagement.Instance._loggedUser);
         }
 
         [HttpPost]
@@ -30,17 +31,30 @@ namespace Minesweeper_Web_Application.Controllers
         {
             string result = choice["Selection"].ToString();
             Debug.WriteLine("Radio button value: " + result);
-            if (result == "Play")
+            switch (result)
             {
-                //return View("/Views/Game/Game.cshtml");
-                return RedirectToAction("Index", "Game");
+                case "Play":
+                    return RedirectToAction("Index", "Game");
+                case "HighScores":
+                    return View("HighScores");
+                case "Profile":
+                    return View("UserProfile", UserManagement.Instance._loggedUser);
+                case "Logout":
+                    Debug.WriteLine("Logged user: " + UserManagement.Instance._loggedUser.UserName);
+                    UserManagement.Instance.LogOutUser();
+                    if(UserManagement.Instance._loggedUser != null)
+                    {
+                        Debug.WriteLine("Logged user: " + UserManagement.Instance._loggedUser.UserName);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("No user is logged into the application");
+                    }
+                    return RedirectToAction("Index", "Login");
+                default:
+                    break;
             }
-            else
-            {
-                return View("/Views/Login/Login.cshtml");
-            }
-            
-            //return View("/Views/Login/Login.cshtml");
+            return View("HomePageView");
         }
 
         private ActionResult ViewGameBoard()

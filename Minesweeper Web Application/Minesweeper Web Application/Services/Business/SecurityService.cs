@@ -7,6 +7,30 @@ using System.Web;
 
 namespace Minesweeper_Web_Application.Services.Business
 {
+    public class UserManagement
+    {
+        private static UserManagement _instance;
+        public UserModel _loggedUser { get; set; } = new UserModel();
+
+        private UserManagement() { }
+
+        public static UserManagement Instance
+        {
+            get
+            {
+                if(_instance == null)
+                {
+                    _instance = new UserManagement();
+                }
+                return _instance;
+            }
+        }
+
+        public void LogOutUser()
+        {
+            _loggedUser = null;
+        }
+    }
     public class SecurityService
     {
         SecurityDAO service = new SecurityDAO();
