@@ -11,14 +11,13 @@
     <title>Test</title>
 </head>
 <body>
-
     <div style="text-align:center; font-family:Arial; font-size:24pt; font-weight:bold; ">
         @Html.Label("Play a game of MineSweeper")
     </div>
 
     @using (Html.BeginForm("OnButtonClick", "Game"))
     {
-        <div class="grid">
+        <div class="grid" style="margin-left: 25%; margin-right: 25%;">
 
 
             @{ 

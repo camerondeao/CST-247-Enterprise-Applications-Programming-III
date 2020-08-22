@@ -10,8 +10,6 @@ namespace Minesweeper_Web_Application.Services.Gameplay
 {
     public class GameplayService
     {
-        int totalSafeCells;
-
         public void Convert2DArray(List<GameSquareModel> input, int height, int width)
         {
             Debug.Write("\n\n");
@@ -24,13 +22,11 @@ namespace Minesweeper_Web_Application.Services.Gameplay
                     output[i, j] = input[i * width + j];
                 }
             }
-            DisplayBoard(output);
-            FindBombs(output);
-            ConvertToList(output);
-            //return output;
+
+            SetNeighborValue(output);
         }
 
-        private void FindBombs(GameSquareModel[,] board)
+        private void SetNeighborValue(GameSquareModel[,] board)
         {
             for(int i = 0; i < board.GetLength(0); i++)
             {
@@ -117,9 +113,9 @@ namespace Minesweeper_Web_Application.Services.Gameplay
             {
                 for(int j = 0; j < width; j++)
                 {
-                    Debug.WriteLine("Variable Check.");
-                    Debug.WriteLine("height width i j ");
-                    Debug.WriteLine(height + width + " " + i + " " + j );
+                    //Debug.WriteLine("Variable Check.");
+                    //Debug.WriteLine("height width i j ");
+                    //Debug.WriteLine(height + width + " " + i + " " + j );
                     output[i, j] = input[i * width + j];
                 }
             }
@@ -130,6 +126,7 @@ namespace Minesweeper_Web_Application.Services.Gameplay
 
         public GameSquareModel[,] ChoiceIteration(GameSquareModel[,] input, int row, int col)
         {
+            Debug.WriteLine("Firing ChoiceIteration method. Row: " + row + " Col: " + col);
             if(input[row, col].Reveal == 0 && input[row, col].Visited == false)
             {
                 input[row, col].Visited = true;
@@ -154,27 +151,12 @@ namespace Minesweeper_Web_Application.Services.Gameplay
             else
             {
                 input[row, col].Visited = true;
-                //We'll probably have to apply logic for adjusting the buttons here.
             }
 
             return input;
         }
 
-        public void TotalSafeCells(int bombs, int rows, int cols)
-        {
-            int totalCells = rows * cols;
-            totalSafeCells = totalCells - bombs;
-        }
-
-        public void CheckWinCondition(int selectionCount)
-        {
-            if(selectionCount == totalSafeCells)
-            {
-                //Call logic that will showcase a win to the player.
-            }
-        }
-
-        private void DisplayBoard(GameSquareModel[,] input)
+        private void ConsoleBoardDisplay(GameSquareModel[,] input)
         {
             Debug.WriteLine("Displaying 2D array board.");
             Debug.WriteLine("List: " + input.ToString());
@@ -209,7 +191,6 @@ namespace Minesweeper_Web_Application.Services.Gameplay
                 
                 for(int j = 0; j < width; j++)
                 {
-                    //Debug.Write(input[i, j].Bomb);
                     Debug.Write(input[i, j].Bomb + " ");
                     elementCounter++;
                 }

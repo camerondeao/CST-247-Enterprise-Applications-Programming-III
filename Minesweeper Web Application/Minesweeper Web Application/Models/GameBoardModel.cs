@@ -33,8 +33,6 @@ namespace Minesweeper_Web_Application.Models
 
         }
 
-
-
         public int RowSize {get; set;}
         public int ColumnSize { get; set; }
         public int GetBoardSize()
@@ -45,6 +43,7 @@ namespace Minesweeper_Web_Application.Models
         public void PlaceBombs(List<GameSquareModel> gameBoard, int n)//set locations of bombs
         {
             Random random = new Random();
+
             for (int i = 0; i < n; i++)//Create an array of random positions to place boms in an one-dimensional array
             {
                 int position = random.Next(1, GetBoardSize());
@@ -55,9 +54,6 @@ namespace Minesweeper_Web_Application.Models
                 gameBoard[position].Bomb = 9;
             }
 
-            //Outputting to console for testing purposes.
-
-            //Calling services to convert to 2D array and place bombs.
             GameplayService service = new GameplayService();
             service.Convert2DArray(gameBoard, 12, 12);
         }
@@ -77,7 +73,6 @@ namespace Minesweeper_Web_Application.Models
         {
             for (int i = 0; i < GetBoardSize(); i++)
             {
-
                 {
                     gameBoard[i].Visited = false;
                 }
@@ -129,16 +124,12 @@ namespace Minesweeper_Web_Application.Models
             {
                 Debug.Write("\n");
             }
-
-            Debug.WriteLine("\nCount of elements in original list: " + gameBoard.Count);
         }
-
 
         public void ViewChoice(List<GameSquareModel> gameBoard, int row, int col)
         {
             GameplayService service = new GameplayService();
             gameBoard = service.SelectionServices(gameBoard, rowSize, columnSize, row, col);
-            //service.ChoiceIteration(gameBoard, row, col);
         }
     }
 }

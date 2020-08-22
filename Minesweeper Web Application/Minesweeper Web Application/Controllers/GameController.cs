@@ -17,11 +17,13 @@ namespace Minesweeper_Web_Application.Controllers
         public static int row = 12;
         public static int col = 12;
         public static int numofBombs = 24;
-        public static int remainingSquares = (row * col - numofBombs);
-        public static List<GameSquareModel> squares = new List<GameSquareModel>();
-        public static GameBoardModel board = new GameBoardModel(squares, row, col);
+        public static int safeSquares = (row * col - numofBombs);
+        public static GameBoardModel board = null;
+        public static List<GameSquareModel> squares = null;
         public ActionResult Index()
         {
+            squares = new List<GameSquareModel>();
+            board = new GameBoardModel(squares, row, col);
             board.PlaceBombs(squares, numofBombs);
             ViewBag.squares = squares;
             board.BombToString(squares);
@@ -35,28 +37,34 @@ namespace Minesweeper_Web_Application.Controllers
             int r = index / row;
             int c = index % col;
             int squaresRemaining = 0;
-            for (int i = 0; i < row * col; i++)
-            {
-                if (!squares[i].Visited)
-                { squaresRemaining++; }
-            }
+            
             if (squares[index].Bomb == 9)
             {
                 ViewBag.squares = squares;
                 return View("Loser");
             }
-            else if (remainingSquares > 0)
+            else
             {
                 board.ViewChoice(squares, r, c);
                 ViewBag.squares = squares;
             }
-            else
+            
+            for (int i = 0; i < row * col; i++)
             {
-                return View("Winner"); ;
+                if (!squares[i].Visited)
+                { 
+                    squaresRemaining++;
+                    Debug.WriteLine("Squares remaining: " + squaresRemaining);
+                }
             }
+
+            if(squaresRemaining == numofBombs)
+            {
+                ViewBag.squares = squares;
+                return View("Winner");
+            }
+
             return View("Game");
-
         }
-
     }
 }
