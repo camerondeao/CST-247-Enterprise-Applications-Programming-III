@@ -3,7 +3,7 @@
 
  .grid {
     margin:auto;
-    display: grid;
+    display: inline-grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-columns: repeat(12, 1fr);
     grid-column-gap: 2em;

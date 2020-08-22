@@ -117,6 +117,9 @@ namespace Minesweeper_Web_Application.Services.Gameplay
             {
                 for(int j = 0; j < width; j++)
                 {
+                    Debug.WriteLine("Variable Check.");
+                    Debug.WriteLine("height width i j ");
+                    Debug.WriteLine(height + width + " " + i + " " + j );
                     output[i, j] = input[i * width + j];
                 }
             }
