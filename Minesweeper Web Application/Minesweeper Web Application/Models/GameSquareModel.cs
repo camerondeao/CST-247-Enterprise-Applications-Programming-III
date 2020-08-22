@@ -12,14 +12,14 @@ namespace Minesweeper_Web_Application.Models
 
 
         //picture to be displayed 
-        public int reveal; //-1: Bomb
+        public int reveal; //9: Bomb
                             //0: Empty
                             //(0-8):Adjacent bombs
-                            //9: hidden
+                            
         public bool visited;
 
 
-        public GameSquareModel() { bomb = 0; reveal = 9; visited = false; }
+        public GameSquareModel() { bomb = 0; visited = false; }
         public int Bomb { get; set; }
         public int Reveal { get; set; }
 

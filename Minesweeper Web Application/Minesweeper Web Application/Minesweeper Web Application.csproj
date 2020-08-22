@@ -164,6 +164,8 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Home\HighScores.cshtml" />
     <Content Include="Views\Home\UserProfile.cshtml" />
+    <Content Include="Views\Game\Winner.cshtml" />
+    <Content Include="Views\Game\Loser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
