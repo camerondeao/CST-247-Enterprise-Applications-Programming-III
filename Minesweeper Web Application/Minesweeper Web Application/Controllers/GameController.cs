@@ -6,42 +6,41 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using System.Diagnostics;
 
 namespace Minesweeper_Web_Application.Controllers
 {
     
     public class GameController : Controller
     {
-
-        // GET: Home
+        public static int row = 12;
+        public static int col = 12;
+        public static int numofBombs = 24;
+        public static List<GameSquareModel> squares = new List<GameSquareModel>();
+        public static GameBoardModel board = new GameBoardModel(squares, row, col);
         public ActionResult Index()
         {
-            int row = 12;
-            int col = 12;
-            int numofBombs = 24;
-
-            GameBoardModel board = new GameBoardModel(row, col);
-            
-            board.PlaceBombs(numofBombs);
-            ViewBag.bombPosition = board.BombToArray();//sends number of surrounding bombs to View
-            
-            //Test Pictures
-            board.SetReveal(0, -1);
-            board.SetReveal(1, 0);
-            board.SetReveal(2, 1);
-            board.SetReveal(3, 2);
-            board.SetReveal(4, 3);
-            board.SetReveal(5, 4);
-            board.SetReveal(6, 5);
-            board.SetReveal(7, 6);
-            board.SetReveal(9, 7);
-            board.SetReveal(8, 8);
-
-            ViewBag.revealPosition = board.RevealToArray();//sends what picture to show in view
-
+            board.PlaceBombs(squares, numofBombs);
+            ViewBag.squares = squares;
+            board.BombToString(squares);
             return View("Game");
         }
+        public ActionResult OnButtonClick(string mine)
+        {
 
+            int value = Int32.Parse(mine);
+            int index = value - 1;
+            int r = index / row;
+            int c = index % col;
+
+            Debug.WriteLine("index value row column");
+            Debug.WriteLine(index + " "+ value+ " "+ r + " "+ c);
+
+            board.ViewChoice(squares, r, c);
+            ViewBag.squares = squares;
+            return View("Game");
+
+        }
 
     }
 }

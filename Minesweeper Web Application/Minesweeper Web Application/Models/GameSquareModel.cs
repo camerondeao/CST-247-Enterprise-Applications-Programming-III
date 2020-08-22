@@ -8,17 +8,18 @@ namespace Minesweeper_Web_Application.Models
 {
     public class GameSquareModel
     {
-        private int bomb;//(0-8):numbers of bombs in adjacent squares:
+        public int bomb;//(0-8):numbers of bombs in adjacent squares:
 
 
         //picture to be displayed 
-        private int reveal; //-1: Bomb
+        public int reveal; //-1: Bomb
                             //0: Empty
                             //(0-8):Adjacent bombs
                             //9: hidden
+        public bool visited;
 
 
-        public GameSquareModel() { bomb = 0; reveal = 9; }
+        public GameSquareModel() { bomb = 0; reveal = 9; visited = false; }
         public int Bomb { get; set; }
         public int Reveal { get; set; }
 

@@ -159,8 +159,8 @@
     <Content Include="Views\Registration\Registration.cshtml" />
     <Content Include="Views\Login\LoginPassed.cshtml" />
     <Content Include="Views\Login\LoginFailed.cshtml" />
-    <Content Include="Views\Game\Game.cshtml" />
     <Content Include="Views\Home\HomePageView.cshtml" />
+    <Content Include="Views\Game\Game.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
