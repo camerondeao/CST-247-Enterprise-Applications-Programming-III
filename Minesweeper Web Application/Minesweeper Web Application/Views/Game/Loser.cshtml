@@ -7,14 +7,20 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Test</title>
+    <title>Game Over</title>
 </head>
 <body>
 
     <div style="text-align:center; font-family:Arial; font-size:24pt; font-weight:bold; ">
         @Html.Label("You have lost the game")
     </div>
-    <div class="grid">
+
+    @using (Html.BeginForm("MainPage", "Home", FormMethod.Get))
+    {
+
+    
+        
+    <div class="grid" style="margin-left: 35%;">
         @{
             foreach (var i in ViewBag.squares)
             {
@@ -74,14 +80,20 @@
                     <figure class="gallery__item gallery__item-9">
                         <img src="~/Images/ms8.png" alt="Image">
                     </figure>
-                    break;
+                            break;
                     }
-                    }
+                }
 
-                
-                    }
-                    
-                    }
-            </div>
+
+            }
+            }
+    </div>
+
+    <div class="form-group">
+        <div style="display: block; margin-left: 45%;">
+            <input type="submit" value="Home Page" class="btn btn-default"/>
+        </div>
+    </div>
+    }
 </body>
 </html>
