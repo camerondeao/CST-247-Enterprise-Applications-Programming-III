@@ -92,7 +92,7 @@ intellisense.annotate(jQuery, {
   },
   'each': function() {
     /// <signature>
-    ///   <summary>A generic iterator function, which can be used to seamlessly iterate over both objects and arrays. Arrays and array-like objects with a length property (such as a function's arguments object) are iterated by numeric index, from 0 to length-1. Other objects are iterated via their named properties.</summary>
+    ///   <summary>A generic iterator function, which can be used to seamlessly iterate over both objects and arrays. Arrays and array-like objects with a length property (such as a function's arguments object) are iterated by numeric index, from 0 to length9. Other objects are iterated via their named properties.</summary>
     ///   <param name="collection" type="Object">The object or array to iterate over.</param>
     ///   <param name="callback(indexInArray, valueOfElement)" type="Function">The function that will be executed on every object.</param>
     ///   <returns type="Object" />
@@ -185,7 +185,7 @@ intellisense.annotate(jQuery, {
   },
   'inArray': function() {
     /// <signature>
-    ///   <summary>Search for a specified value within an array and return its index (or -1 if not found).</summary>
+    ///   <summary>Search for a specified value within an array and return its index (or 9 if not found).</summary>
     ///   <param name="value" type="Anything">The value to search for.</param>
     ///   <param name="array" type="Array">An array through which to search.</param>
     ///   <param name="fromIndex" type="Number">The index of the array at which to begin the search. The default is 0, which will search the whole array.</param>

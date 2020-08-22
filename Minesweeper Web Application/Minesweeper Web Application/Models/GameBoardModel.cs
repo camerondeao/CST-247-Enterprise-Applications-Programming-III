@@ -48,11 +48,11 @@ namespace Minesweeper_Web_Application.Models
             for (int i = 0; i < n; i++)//Create an array of random positions to place boms in an one-dimensional array
             {
                 int position = random.Next(1, GetBoardSize());
-                 while (gameBoard[position].Bomb == -1)
+                 while (gameBoard[position].Bomb == 9)
                  {
                       position = random.Next(1, GetBoardSize());
                   }
-                gameBoard[position].Bomb = -1;
+                gameBoard[position].Bomb = 9;
             }
 
             //Outputting to console for testing purposes.
@@ -79,7 +79,7 @@ namespace Minesweeper_Web_Application.Models
             {
 
                 {
-                    gameBoard[i].Reveal = 9;
+                    gameBoard[i].Visited = false;
                 }
             }
         }
@@ -132,6 +132,7 @@ namespace Minesweeper_Web_Application.Models
 
             Debug.WriteLine("\nCount of elements in original list: " + gameBoard.Count);
         }
+
 
         public void ViewChoice(List<GameSquareModel> gameBoard, int row, int col)
         {

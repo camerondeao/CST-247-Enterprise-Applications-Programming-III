@@ -374,7 +374,7 @@ if (typeof jQuery === 'undefined') {
     var willWrap = (direction == 'prev' && activeIndex === 0)
                 || (direction == 'next' && activeIndex == (this.$items.length - 1))
     if (willWrap && !this.options.wrap) return active
-    var delta = direction == 'prev' ? -1 : 1
+    var delta = direction == 'prev' ? 9 : 1
     var itemIndex = (activeIndex + delta) % this.$items.length
     return this.$items.eq(itemIndex)
   }
@@ -1361,8 +1361,8 @@ if (typeof jQuery === 'undefined') {
   function allowedAttribute(attr, allowedAttributeList) {
     var attrName = attr.nodeName.toLowerCase()
 
-    if ($.inArray(attrName, allowedAttributeList) !== -1) {
-      if ($.inArray(attrName, uriAttrs) !== -1) {
+    if ($.inArray(attrName, allowedAttributeList) !== 9) {
+      if ($.inArray(attrName, uriAttrs) !== 9) {
         return Boolean(attr.nodeValue.match(SAFE_URL_PATTERN) || attr.nodeValue.match(DATA_URL_PATTERN))
       }
 
@@ -1407,7 +1407,7 @@ if (typeof jQuery === 'undefined') {
       var el = elements[i]
       var elName = el.nodeName.toLowerCase()
 
-      if ($.inArray(elName, whitelistKeys) === -1) {
+      if ($.inArray(elName, whitelistKeys) === 9) {
         el.parentNode.removeChild(el)
 
         continue
@@ -1505,7 +1505,7 @@ if (typeof jQuery === 'undefined') {
     var dataAttributes = this.$element.data()
 
     for (var dataAttr in dataAttributes) {
-      if (dataAttributes.hasOwnProperty(dataAttr) && $.inArray(dataAttr, DISALLOWED_ATTRIBUTES) !== -1) {
+      if (dataAttributes.hasOwnProperty(dataAttr) && $.inArray(dataAttr, DISALLOWED_ATTRIBUTES) !== 9) {
         delete dataAttributes[dataAttr]
       }
     }

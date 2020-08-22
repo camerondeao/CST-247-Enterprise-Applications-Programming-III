@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace Minesweeper_Web_Application.Controllers
 {
@@ -16,6 +17,7 @@ namespace Minesweeper_Web_Application.Controllers
         public static int row = 12;
         public static int col = 12;
         public static int numofBombs = 24;
+        public static int remainingSquares = (row * col - numofBombs);
         public static List<GameSquareModel> squares = new List<GameSquareModel>();
         public static GameBoardModel board = new GameBoardModel(squares, row, col);
         public ActionResult Index()
@@ -32,12 +34,26 @@ namespace Minesweeper_Web_Application.Controllers
             int index = value - 1;
             int r = index / row;
             int c = index % col;
-
-            Debug.WriteLine("index value row column");
-            Debug.WriteLine(index + " "+ value+ " "+ r + " "+ c);
-
-            board.ViewChoice(squares, r, c);
-            ViewBag.squares = squares;
+            int squaresRemaining = 0;
+            for (int i = 0; i < row * col; i++)
+            {
+                if (!squares[i].Visited)
+                { squaresRemaining++; }
+            }
+            if (squares[index].Bomb == 9)
+            {
+                ViewBag.squares = squares;
+                return View("Loser");
+            }
+            else if (remainingSquares > 0)
+            {
+                board.ViewChoice(squares, r, c);
+                ViewBag.squares = squares;
+            }
+            else
+            {
+                return View("Winner"); ;
+            }
             return View("Game");
 
         }

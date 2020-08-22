@@ -38,35 +38,35 @@ namespace Minesweeper_Web_Application.Services.Gameplay
                 {
                     int neighborCounter = 0;
 
-                    if(i > 0 && board[i - 1, x].Bomb == -1)
+                    if(i > 0 && board[i - 1, x].Bomb == 9)
                     {
                         neighborCounter++;
                     }
-                    if (x > 0 && board[i, x -1].Bomb == -1)
+                    if (x > 0 && board[i, x - 1].Bomb == 9)
                     {
                         neighborCounter++;
                     }
-                    if(i > 0 && x > 0 && board[i - 1, x - 1].Bomb == -1)
+                    if(i > 0 && x > 0 && board[i - 1, x - 1].Bomb == 9)
                     {
                         neighborCounter++;
                     }
-                    if(i < board.GetLength(0) - 1 && board[i + 1, x].Bomb == -1)
+                    if(i < board.GetLength(0) - 1 && board[i + 1, x].Bomb == 9)
                     {
                         neighborCounter++;
                     }
-                    if(x < board.GetLength(0) - 1 && board[i, x + 1].Bomb == -1)
+                    if(x < board.GetLength(0) - 1 && board[i, x + 1].Bomb == 9)
                     {
                         neighborCounter++;
                     }
-                    if(i < board.GetLength(0) - 1 && x < board.GetLength(0) - 1 && board[i + 1, x + 1].Bomb == -1)
+                    if(i < board.GetLength(0) - 1 && x < board.GetLength(0) - 1 && board[i + 1, x + 1].Bomb == 9)
                     {
                         neighborCounter++;
                     }
-                    if(i < board.GetLength(0) - 1 && x > 0 && board[i + 1, x - 1].Bomb == -1)
+                    if(i < board.GetLength(0) - 1 && x > 0 && board[i + 1, x - 1].Bomb == 9)
                     {
                         neighborCounter++;
                     }
-                    if(i > 0 && x < board.GetLength(0) - 1 && board[i - 1, x + 1].Bomb == -1)
+                    if(i > 0 && x < board.GetLength(0) - 1 && board[i - 1, x + 1].Bomb == 9)
                     {
                         neighborCounter++;
                     }
@@ -134,19 +134,19 @@ namespace Minesweeper_Web_Application.Services.Gameplay
             {
                 input[row, col].Visited = true;
 
-                if(row - 1 >= 0 && input[row - 1, col].Bomb != -1)
+                if(row - 1 >= 0 && input[row - 1, col].Bomb != 9)
                 {
                     ChoiceIteration(input, row - 1, col);
                 }
-                if(row + 1 < input.GetLength(0) && input[row + 1, col].Bomb != -1)
+                if(row + 1 < input.GetLength(0) && input[row + 1, col].Bomb != 9)
                 {
                     ChoiceIteration(input, row + 1, col);
                 }
-                if(col + 1 < input.GetLength(1) && input[row, col + 1].Bomb != -1)
+                if(col + 1 < input.GetLength(1) && input[row, col + 1].Bomb != 9)
                 {
                     ChoiceIteration(input, row, col + 1);
                 }
-                if(col - 1 >= 0 && input[row, col - 1].Bomb != -1)
+                if(col - 1 >= 0 && input[row, col - 1].Bomb != 9)
                 {
                     ChoiceIteration(input, row, col - 1);
                 }

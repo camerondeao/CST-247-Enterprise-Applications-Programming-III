@@ -21,85 +21,89 @@
         <div class="grid">
 
 
-            @foreach (var i in ViewBag.squares)
-            {
-                int num = 1;
-                string index = num.ToString();
-                <figure class="gallery__item gallery__item--1">
-                    <button type="submit" name="mine" value=@index>
-                        @if (!@i.Visited)
-                        {
+            @{ 
 
-                            <img src="~/Images/Cover.jpg" alt="Image">
+                int num = 0;
+                foreach (var i in ViewBag.squares)
+                {
+                    num++;
+                    string index = num.ToString();
+                        <figure class="gallery__item gallery__item--1">
 
-                        }
-                        else
-                        {
-                            switch (@i.Reveal)
+                            @if (!@i.Visited)
                             {
-                                case -1:
-                                    <figure class="gallery__item gallery__item--1">
-                                        <img src="~/Images/bomb.png" alt="Image">
-                                    </figure>
-                                    break;
-                                case -0:
-                                    <figure class="gallery__item gallery__item--1">
-                                        <img src="~/Images/empty.png" alt="Image">
-                                    </figure>
-                                    break;
-                                case 1:
-                                    <figure class="gallery__item gallery__item--1">
-                                        <img src="~/Images/ms1.png" alt="Image">
-                                    </figure>
-                                    break;
-                                case 2:
-                                    <figure class="gallery__item gallery__item--1">
-                                        <img src="~/Images/ms2.png" alt="Image">
-                                    </figure>
-                                    break;
-                                case 3:
-                                    <figure class="gallery__item gallery__item--1">
-                                        <img src="~/Images/ms3.png" alt="Image">
-                                    </figure>
-                                    break;
-                                case 4:
-                                    <figure class="gallery__item gallery__item--1">
-                                        <img src="~/Images/ms4.png" alt="Image">
-                                    </figure>
-                                    break;
-                                case 5:
-                                    <figure class="gallery__item gallery__item--1">
-                                        <img src="~/Images/ms5.png" alt="Image">
-                                    </figure>
-                                    break;
-                                case 6:
-                                    <figure class="gallery__item gallery__item--1">
-                                        <img src="~/Images/ms6.png" alt="Image">
-                                    </figure>
-                                    break;
-                                case 7:
-                                    <figure class="gallery__item gallery__item--1">
-                                        <img src="~/Images/ms7.jpg" alt="Image">
-                                    </figure>
-                                    break;
+                                <button type="submit" name="mine" value=@index>
 
-                                case 8:
-                                    <figure class="gallery__item gallery__item--1">
-                                        <img src="~/Images/ms8.png" alt="Image">
-                                    </figure>
-                                    break;
+                                    <img src="~/Images/Cover.jpg" alt="Image">
+                                </button><br />
                             }
-                            num++;
-                        }
-                    </button><br />
-                </figure>
+                            else
+                            {
+                                switch (@i.Reveal)
+                                {
+                                    case -1:
+                                        <figure class="gallery__item gallery__item--1">
+                                            <img src="~/Images/bomb.png" alt="Image">
+                                        </figure>
+                                        break;
+                                    case 0:
+                                        <figure class="gallery__item gallery__item--1">
+                                            <img src="~/Images/empty.png" alt="Image">
+                                        </figure>
+                                        break;
+                                    case 1:
+                                        <figure class="gallery__item gallery__item--1">
+                                            <img src="~/Images/ms1.png" alt="Image">
+                                        </figure>
+                                        break;
+                                    case 2:
+                                        <figure class="gallery__item gallery__item--1">
+                                            <img src="~/Images/ms2.png" alt="Image">
+                                        </figure>
+                                        break;
+                                    case 3:
+                                        <figure class="gallery__item gallery__item--1">
+                                            <img src="~/Images/ms3.png" alt="Image">
+                                        </figure>
+                                        break;
+                                    case 4:
+                                        <figure class="gallery__item gallery__item--1">
+                                            <img src="~/Images/ms4.png" alt="Image">
+                                        </figure>
+                                        break;
+                                    case 5:
+                                        <figure class="gallery__item gallery__item--1">
+                                            <img src="~/Images/ms5.png" alt="Image">
+                                        </figure>
+                                        break;
+                                    case 6:
+                                        <figure class="gallery__item gallery__item--1">
+                                            <img src="~/Images/ms6.png" alt="Image">
+                                        </figure>
+                                        break;
+                                    case 7:
+                                        <figure class="gallery__item gallery__item--1">
+                                            <img src="~/Images/ms7.jpg" alt="Image">
+                                        </figure>
+                                        break;
+
+                                    case 8:
+                                        <figure class="gallery__item gallery__item--1">
+                                            <img src="~/Images/ms8.png" alt="Image">
+                                        </figure>
+                                        break;
+                                }
+                            }
+
+                        </figure>
 
 
 
 
+                    }
 
-
-            }
+                
+                }
 
         </div>
     }
