@@ -55,6 +55,7 @@ namespace Minesweeper_Web_Application.Controllers
                 { 
                     squaresRemaining++;
                     Debug.WriteLine("Squares remaining: " + squaresRemaining);
+                    Debug.WriteLine("Submission commit");
                 }
             }
 
