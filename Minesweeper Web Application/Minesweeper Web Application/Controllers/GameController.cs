@@ -80,5 +80,11 @@ namespace Minesweeper_Web_Application.Controllers
 
             return View("Game");
         }
+
+        //Added this so we have it to post a flag on a right-click of an open space
+        public ActionResult OnButtonRightClick(string flagSpace)
+        {
+            return View("Game");
+        }
     }
 }

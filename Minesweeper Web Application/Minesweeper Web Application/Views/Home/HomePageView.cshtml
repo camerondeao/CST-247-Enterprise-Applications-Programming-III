@@ -30,8 +30,15 @@
                 <div class="form-group">
                     <div class="col-md90">
                         @Html.RadioButton("Selection", "Play", new { @checked = true })
-                        @Html.Label("Play Minesweeper")
+                        @Html.Label("New Game")
                     </div>
+
+                    <!-- Radio button for saved game; will be used in later implementation -->
+                    <div class="col-md90">
+                        @Html.RadioButton("Selection", "Continue_Play")
+                        @Html.Label("Continue Game")
+                    </div>
+
                     <div class="col-md90">
                         @Html.RadioButton("Selection", "HighScores")
                         @Html.Label("View High Scores")

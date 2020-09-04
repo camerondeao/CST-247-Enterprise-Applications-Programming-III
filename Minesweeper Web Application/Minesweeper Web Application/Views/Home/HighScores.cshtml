@@ -45,7 +45,15 @@
     <br />
     @Html.Label("High Scores Leaderboard", htmlAttributes: new { @class = "subHeaderText" })
     <div>
-        <table>
+
+        <!-- updated CSS styling -->
+        <style>
+            table, th {
+                border: 5px solid black;
+            }
+        </style>
+
+        <table style = "background-color: lightcyan; border: 5px solid black;">
             <tr>
                 <th scope="col">Rank</th>
                 <th scope="col">Username</th>
@@ -60,6 +68,38 @@
                     <td>@Html.DisplayFor(modelItem => data.Time)</td>
                 </tr>
             }
+
+            <!-- Let's make scores 1, 2, and 3 have gold, silver and bronze displays; other players and the title should be displayed in white -->
+
+            <!-- testing lines; can be edited/commented out once scoring system is implemented -->
+            <!-- score 1-->
+            <!-- <tr style="background-color: gold">
+                <td scope="col">Test1</td>
+                <td scope="col">Player1</td>
+                <td scope="col">50000</td>
+            </tr>
+
+            <!-- score 2 -->
+            <tr style="background-color: silver">
+                <td scope="col">Test2</td>
+                <td scope="col">Player2</td>
+                <td scope="col">45000</td>
+            </tr>
+
+            <!-- score 3 -->
+            <tr style="background-color: #cd7f32">
+                <td scope="col">Test3</td>
+                <td scope="col">Player3</td>
+                <td scope="col">40000</td>
+            </tr>
+
+            <!-- score 4 -->
+            <tr>
+                <td scope="col">Test4</td>
+                <td scope="col">Player4</td>
+                <td scope="col">25000</td>
+            </tr>  -->
+
         </table>
     </div>
 </div>
