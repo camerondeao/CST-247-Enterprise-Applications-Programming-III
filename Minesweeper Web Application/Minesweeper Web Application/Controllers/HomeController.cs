@@ -29,19 +29,34 @@ namespace Minesweeper_Web_Application.Controllers
         [HttpPost]
         public ActionResult GetSelectedOption(FormCollection choice)
         {
+            
+
             string result = choice["Selection"].ToString();
             Debug.WriteLine("Radio button value: " + result);
             switch (result)
             {
                 case "Play":
                     return RedirectToAction("Index", "Game");
+
                 case "HighScores":
-                    return View("HighScores");
+                    List<LeaderBoard> dataScores = new List<LeaderBoard>();
+                    LeaderBoardService service = new LeaderBoardService();
+
+                    //This commented call exists only for testing purposes. 
+                    //service.InsertHighScore(UserManagement.Instance._loggedUser, 251.34m);
+
+                    dataScores = service.GetScores(dataScores);
+
+                    return View("HighScores", dataScores);
+
                 case "Profile":
                     return View("UserProfile", UserManagement.Instance._loggedUser);
+
                 case "Logout":
                     Debug.WriteLine("Logged user: " + UserManagement.Instance._loggedUser.UserName);
+
                     UserManagement.Instance.LogOutUser();
+
                     if(UserManagement.Instance._loggedUser != null)
                     {
                         Debug.WriteLine("Logged user: " + UserManagement.Instance._loggedUser.UserName);
@@ -51,6 +66,7 @@ namespace Minesweeper_Web_Application.Controllers
                         Debug.WriteLine("No user is logged into the application");
                     }
                     return RedirectToAction("Index", "Login");
+
                 default:
                     break;
             }

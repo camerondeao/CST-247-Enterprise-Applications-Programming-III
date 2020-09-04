@@ -32,13 +32,13 @@ namespace Minesweeper_Web_Application.Controllers
             {
                 //UserManagement.Instance._loggedUser = model;
                 Debug.WriteLine("Logged in User: " + UserManagement.Instance._loggedUser.UserName);
-                System.Diagnostics.Debug.WriteLine("Login passed!");
+                Debug.WriteLine("Login passed!");
                 //return View("LoginPassed");
                 return RedirectToAction("MainPage", "Home");
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("Login failed!");
+                Debug.WriteLine("Login failed!");
                 return View("LoginFailed");
             }
         }

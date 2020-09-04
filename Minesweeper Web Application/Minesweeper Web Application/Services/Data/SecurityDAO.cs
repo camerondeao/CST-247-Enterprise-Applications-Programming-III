@@ -13,10 +13,41 @@ using System.Web;
 
 namespace Minesweeper_Web_Application.Services.Data
 {
+    
+
     public class SecurityDAO
     {
         string connectionStr = "Data Source=(localdb)\\MSSQLLocalDB;initial catalog=cst247_minesweeper ;Integrated Security=True;";
-        const string key = "asdf78954wer7q5re72er54wr5654dsf";
+        //const string key = "asdf78954wer7q5re72er54wr5654dsf";
+
+        public bool CheckUsername(UserModel user)
+        {
+            string testing = "SELECT 1 FROM dbo.Users WHERE USERNAME = @Username";
+            SqlConnection conn = new SqlConnection(connectionStr);
+            SqlCommand command = new SqlCommand(testing, conn);
+
+            try
+            {
+                command.Parameters.Add("@USERNAME", System.Data.SqlDbType.VarChar, 25).Value = user.UserName;
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if(reader.HasRows)
+                {
+                    return true;
+                }
+            }
+            catch (SqlException e)
+            {
+                Debug.WriteLine("Error generated. Details: " + e.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return false;
+        }
+
         public bool RegisterUser(UserModel user)
         {
             bool registered = false;
@@ -24,7 +55,7 @@ namespace Minesweeper_Web_Application.Services.Data
             string userGender;
             userGender = CheckUserGender(user);
 
-            user.Password = Encrypt(key, user.Password);
+            user.Password = Encrypt(System.Web.Configuration.WebConfigurationManager.AppSettings["Key"], user.Password);
 
             SqlConnection conn = new SqlConnection(connectionStr);
             string insertQuery = "INSERT INTO dbo.users (FIRSTNAME, LASTNAME, AGE, GENDER, STATE, EMAILADDRESS, USERNAME, PASSWORD)" +
@@ -63,30 +94,32 @@ namespace Minesweeper_Web_Application.Services.Data
         public bool FindByUser(UserLoginModel user)
         {
             bool found = false;
-            string retrieveQuery = "SELECT * FROM dbo.Users WHERE USERNAME = @Username AND PASSWORD = @Password";
+            string retrieveQuery = "SELECT * FROM dbo.Users WHERE USERNAME = @Username";
 
             SqlConnection conn = new SqlConnection(connectionStr);
             SqlCommand command = new SqlCommand(retrieveQuery, conn);
 
-            user.Password = Encrypt(key, user.Password);
-
             try
             {
                 command.Parameters.Add("@USERNAME", System.Data.SqlDbType.VarChar, 25).Value = user.Username;
-                command.Parameters.Add("@PASSWORD", System.Data.SqlDbType.VarChar, 25).Value = user.Password;
                 conn.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
+
                 if (reader.HasRows)
                 {
                     found = true;
                     UserModel currUser = new UserModel();
                     while(reader.Read())
                     {
+                        if (Decrypt(System.Web.Configuration.WebConfigurationManager.AppSettings["Key"], reader.GetString(8)) != user.Password)
+                        {
+                            return false;
+                        }
                         currUser.FirstName = reader.GetString(1);
                         currUser.LastName = reader.GetString(2);
                         currUser.Age = reader.GetInt32(3);
-                        if(reader.GetString(4) == "M")
+                        if (reader.GetString(4) == "M")
                         {
                             currUser.Gender = Gender.Male;
                         }
@@ -102,9 +135,9 @@ namespace Minesweeper_Web_Application.Services.Data
                 }
                 reader.Close();
             }
-            catch (SqlException e)
+            catch(SqlException e)
             {
-                Debug.WriteLine("Error generated. Details: " + e.ToString());
+                Debug.WriteLine("Error generated in retrieval. Details: " + e.ToString());
             }
             finally
             {
