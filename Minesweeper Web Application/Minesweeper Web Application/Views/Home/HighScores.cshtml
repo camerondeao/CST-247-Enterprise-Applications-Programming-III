@@ -1,4 +1,5 @@
-﻿
+﻿@model List<Minesweeper_Web_Application.Models.LeaderBoard>
+
 @{
     ViewBag.Title = "High Scores";
 }
@@ -48,8 +49,17 @@
             <tr>
                 <th scope="col">Rank</th>
                 <th scope="col">Username</th>
-                <th scope="col">Score</th>
+                <th scope="col">Score - Seconds</th>
             </tr>
+
+            @foreach(var data in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => data.Rank)</td>
+                    <td>@Html.DisplayFor(modelItem => data.Username)</td>
+                    <td>@Html.DisplayFor(modelItem => data.Time)</td>
+                </tr>
+            }
         </table>
     </div>
 </div>
