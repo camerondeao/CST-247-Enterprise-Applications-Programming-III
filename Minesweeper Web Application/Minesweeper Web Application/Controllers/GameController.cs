@@ -16,7 +16,7 @@ namespace Minesweeper_Web_Application.Controllers
     {
         public static int row = 12;
         public static int col = 12;
-        public static int numofBombs = 24;
+        public static int numofBombs = 12;
         public static int safeSquares = (row * col - numofBombs);
         public static GameBoardModel board = null;
         public static List<GameSquareModel> squares = null;
@@ -25,10 +25,10 @@ namespace Minesweeper_Web_Application.Controllers
             squares = new List<GameSquareModel>();
             board = new GameBoardModel(squares, row, col);
             board.PlaceBombs(squares, numofBombs);
-            ViewBag.squares = squares;
             board.BombToString(squares);
-            return View("Game");
+            return View("Game", squares);
         }
+        [HttpPost]
         public ActionResult OnButtonClick(string mine)
         {
 
@@ -64,7 +64,14 @@ namespace Minesweeper_Web_Application.Controllers
                 return View("Winner");
             }
 
-            return View("Game");
+            return PartialView("_UpdateGame", squares);
         }
+        [HttpPost]
+        string GetUpdateInfo(string updateID)
+        {
+            string x = updateID;
+            return x;
+        }
+
     }
 }
