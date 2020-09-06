@@ -59,7 +59,7 @@ namespace Minesweeper_Web_Application.Controllers
 
         private ActionResult ViewGameBoard()
         {
-            return View("/Views/Game/Game.cshtml");
+            return PartialView("/Views/Game/Game.cshtml");
         }
     }
 }

@@ -66,12 +66,6 @@ namespace Minesweeper_Web_Application.Controllers
 
             return PartialView("_UpdateGame", squares);
         }
-        [HttpPost]
-        string GetUpdateInfo(string updateID)
-        {
-            string x = updateID;
-            return x;
-        }
 
     }
 }

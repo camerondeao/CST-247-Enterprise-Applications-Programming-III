@@ -1,18 +1,17 @@
 ﻿@model List<Minesweeper_Web_Application.Models.GameSquareModel>
 <link href="~/Content/GamePage.css" rel="stylesheet" type="text/css" />
+
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-
-    <title>Test</title>
 </head>
 <body>
-    <div style="text-align:center; font-family:Arial; font-size:24pt; font-weight:bold; ">
-        @Html.Label("Play a game of MineSweeper")
+
+    <div name="updateInfo ">
+        @Html.Partial("~/Views/Shared/_UpdateGame.cshtml", Model)
     </div>
-    @Html.Partial("~/Views/Shared/_UpdateGame.cshtml", Model)
    
 </body>
 </html>
