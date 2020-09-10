@@ -29,7 +29,7 @@ namespace Minesweeper_Web_Application.Controllers
             return View("Game", squares);
         }
         [HttpPost]
-        public ActionResult OnButtonClick(string mine)
+        public PartialViewResult OnButtonClick(string mine)
         {
 
             int value = Int32.Parse(mine);
@@ -40,8 +40,7 @@ namespace Minesweeper_Web_Application.Controllers
             
             if (squares[index].Bomb == 9)
             {
-                ViewBag.squares = squares;
-                return View("Loser");
+                EndGame("Lose");
             }
             else
             {
@@ -60,11 +59,20 @@ namespace Minesweeper_Web_Application.Controllers
 
             if(squaresRemaining == numofBombs)
             {
-                ViewBag.squares = squares;
-                return View("Winner");
+                EndGame("Win");
             }
 
             return PartialView("_UpdateGame", squares);
+        }
+        public ActionResult EndGame(string finish)
+        {
+            if (finish == "Win")
+            {
+                return View("Winner");
+            }
+            else {
+                return View("Loser");
+            }
         }
 
     }

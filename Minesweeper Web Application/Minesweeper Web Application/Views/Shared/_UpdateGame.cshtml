@@ -9,15 +9,20 @@
         OnSuccess = "ajaxSuccess"
     };
 }
-<script type="text/javascript" language="javascript">
-function DisableBackButton() {
-window.history.forward()
+    <script>
+        $(document).ready(function (e)
+        {
+            $(".updateInfo").each(function (index, item) {
+                var url = $(item).data("url");
+                if (url && url.length > 0) {
+                    (item).load(url);
+                }
+            }
+        });
+    </script>
 }
-DisableBackButton();
-window.onload = DisableBackButton;
-window.onpageshow = function(evt) { if (evt.persisted) DisableBackButton() }
-window.onunload = function() { void (0) }
-</script>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,68 +42,68 @@ window.onunload = function() { void (0) }
                 {
                     num++;
                     string index = num.ToString();
-                        <figure class="class= grid_item">
+                    <figure class="class= grid_item">
 
-                            @if (!@i.Visited)
+                        @if (!@i.Visited)
+                        {
+                            <button type="submit" name="mine" value=@index>
+
+                                <img src="~/Images/Cover.jpg" alt="Image">
+                            </button><br />
+                        }
+                        else
+                        {
+                            switch (@i.Reveal)
                             {
-                                <button type="submit" name="mine" value=@index>
+                                case 0:
+                                    <figure class="gallery_item gallery_item-0">
+                                        <img src="~/Images/empty.png" alt="Image">
+                                    </figure>
+                                    break;
+                                case 1:
+                                    <figure class="gallery_item gallery_item-1">
+                                        <img src="~/Images/ms1.png" alt="Image">
+                                    </figure>
+                                    break;
+                                case 2:
+                                    <figure class="gallery_item gallery_item-2">
+                                        <img src="~/Images/ms2.png" alt="Image">
+                                    </figure>
+                                    break;
+                                case 3:
+                                    <figure class="gallery_item gallery_item-3">
+                                        <img src="~/Images/ms3.png" alt="Image">
+                                    </figure>
+                                    break;
+                                case 4:
+                                    <figure class="gallery_item gallery_item-4">
+                                        <img src="~/Images/ms4.png" alt="Image">
+                                    </figure>
+                                    break;
+                                case 5:
+                                    <figure class="gallery_item gallery_item-5">
+                                        <img src="~/Images/ms5.png" alt="Image">
+                                    </figure>
+                                    break;
+                                case 6:
+                                    <figure class="gallery_item gallery_item-6">
+                                        <img src="~/Images/ms6.png" alt="Image">
+                                    </figure>
+                                    break;
+                                case 7:
+                                    <figure class="gallery_item gallery_item-7">
+                                        <img src="~/Images/ms7.jpg" alt="Image">
+                                    </figure>
+                                    break;
 
-                                    <img src="~/Images/Cover.jpg" alt="Image">
-                                </button><br />
+                                case 8:
+                                    <figure class="gallery_item gallery_item-8">
+                                        <img src="~/Images/ms8.png" alt="Image">
+                                    </figure>
+                                    break;
                             }
-                            else
-                            {
-                                switch (@i.Reveal)
-                                {
-                                    case 0:
-                                        <figure class="gallery_item gallery_item-0">
-                                            <img src="~/Images/empty.png" alt="Image">
-                                        </figure>
-                                        break;
-                                    case 1:
-                                        <figure class="gallery_item gallery_item-1">
-                                            <img src="~/Images/ms1.png" alt="Image">
-                                        </figure>
-                                        break;
-                                    case 2:
-                                        <figure class="gallery_item gallery_item-2">
-                                            <img src="~/Images/ms2.png" alt="Image">
-                                        </figure>
-                                        break;
-                                    case 3:
-                                        <figure class="gallery_item gallery_item-3">
-                                            <img src="~/Images/ms3.png" alt="Image">
-                                        </figure>
-                                        break;
-                                    case 4:
-                                        <figure class="gallery_item gallery_item-4">
-                                            <img src="~/Images/ms4.png" alt="Image">
-                                        </figure>
-                                        break;
-                                    case 5:
-                                        <figure class="gallery_item gallery_item-5">
-                                            <img src="~/Images/ms5.png" alt="Image">
-                                        </figure>
-                                        break;
-                                    case 6:
-                                        <figure class="gallery_item gallery_item-6">
-                                            <img src="~/Images/ms6.png" alt="Image">
-                                        </figure>
-                                        break;
-                                    case 7:
-                                        <figure class="gallery_item gallery_item-7">
-                                            <img src="~/Images/ms7.jpg" alt="Image">
-                                        </figure>
-                                        break;
-
-                                    case 8:
-                                        <figure class="gallery_item gallery_item-8">
-                                            <img src="~/Images/ms8.png" alt="Image">
-                                        </figure>
-                                        break;
-                                }
-                            }
-                        </figure>
+                        }
+                    </figure>
 
 
 
