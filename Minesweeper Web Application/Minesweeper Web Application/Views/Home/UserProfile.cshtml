@@ -38,33 +38,49 @@
     @Html.Label("User Profile", htmlAttributes: new { @class = "headerText" })
     <br />
 
-    <table style="width:50%">
+    <!-- CSS for TH and TD -->
+    <style>
+        th {
+            text-align: right;
+        }
+        td {
+            text-align: left;
+        }
+
+        table, th, td {
+            border: 5px solid black;
+            color: dodgerblue;
+        }
+    </style>
+
+    <!-- added colons after each LabelFor string -->
+    <table style = "width:50%; background-color: lightcyan;">
         <tr>
-            <th>@Html.LabelFor(model => model.FirstName, "First Name", htmlAttributes: new { @class = "text-align: center;" }) </th>
+            <th>@Html.LabelFor(model => model.FirstName, "First Name:", htmlAttributes: new { @class = "text-align: center;" }) </th>
             <td>@Html.DisplayFor(m => m.FirstName)</td>
         </tr>
         <tr>
-            <th>@Html.LabelFor(model => model.LastName, "Last Name", htmlAttributes: new { @class = "text-align: center;" }) </th>
+            <th>@Html.LabelFor(model => model.LastName, "Last Name:", htmlAttributes: new { @class = "text-align: center;" }) </th>
             <td>@Html.DisplayFor(m => m.LastName)</td>
         </tr>
         <tr>
-            <th>@Html.LabelFor(model => model.Age, "Age", htmlAttributes: new { @class = "text-align: center;" }) </th>
+            <th>@Html.LabelFor(model => model.Age, "Age:", htmlAttributes: new { @class = "text-align: center;" }) </th>
             <td>@Html.DisplayFor(m => m.Age)</td>
         </tr>
         <tr>
-            <th>@Html.LabelFor(model => model.Gender, "Gender", htmlAttributes: new { @class = "text-align: center;" }) </th>
+            <th>@Html.LabelFor(model => model.Gender, "Gender:", htmlAttributes: new { @class = "text-align: center;" }) </th>
             <td>@Html.DisplayFor(m => m.Gender)</td>
         </tr>
         <tr>
-            <th>@Html.LabelFor(model => model.State, "State", htmlAttributes: new { @class = "text-align: center;" }) </th>
+            <th>@Html.LabelFor(model => model.State, "State:", htmlAttributes: new { @class = "text-align: center;" }) </th>
             <td>@Html.DisplayFor(m => m.State)</td>
         </tr>
         <tr>
-            <th>@Html.LabelFor(model => model.EmailAddress, "Email Address", htmlAttributes: new { @class = "text-align: center;" }) </th>
+            <th>@Html.LabelFor(model => model.EmailAddress, "Email Address:", htmlAttributes: new { @class = "text-align: center;" }) </th>
             <td>@Html.DisplayFor(m => m.EmailAddress)</td>
         </tr>
         <tr>
-            <th>@Html.LabelFor(model => model.UserName, "Username", htmlAttributes: new { @class = "text-align: center;" }) </th>
+            <th>@Html.LabelFor(model => model.UserName, "Username:", htmlAttributes: new { @class = "text-align: center;" }) </th>
             <td>@Html.DisplayFor(m => m.UserName)</td>
         </tr>
     </table>

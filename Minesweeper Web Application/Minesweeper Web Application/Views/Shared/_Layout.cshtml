@@ -8,7 +8,8 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
 </head>
-<body>
+<!-- changed background color of all webpages -->
+<body style="background-color:powderblue;">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -20,12 +21,10 @@
                 @Html.ActionLink("Minesweeper Web Application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
+                <ul class="nav navbar-nav"></ul>
             </div>
         </div>
     </div>
-
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -34,7 +33,6 @@
         </footer>-->
     </div>
     @RenderPage("_Footer.cshtml")
-
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
