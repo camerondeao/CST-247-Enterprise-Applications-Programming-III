@@ -1,0 +1,92 @@
+﻿@model Minesweeper_Web_Application.Models.GameSquareModel
+
+<link href="~/Content/GamePage.css" rel="stylesheet" type="text/css"/>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Winner</title>
+</head>
+<body>
+    <div style="text-align:center; font-family:Arial; font-size:24pt; font-weight:bold; ">
+        @Html.Label("We have a winner! Congratulations!")
+    </div>
+
+    @using (Html.BeginForm("MainPage", "Home", FormMethod.Get))
+    { 
+    <div class="grid" style="margin-left: 35%;">
+        @{
+            foreach (var i in ViewBag.squares)
+            {
+                if (@i.Bomb == 9)
+                {
+                    <figure class="gallery__item gallery__item-9">
+                        <img src="~/Images/bomb.png" alt="Image">
+                    </figure>
+                }
+                else
+                {
+                    switch (@i.Reveal)
+                    {
+                        case 0:
+                            <figure class="gallery__item gallery__item-9">
+                                <img src="~/Images/empty.png" alt="Image">
+                            </figure>
+                            break;
+                        case 1:
+                            <figure class="gallery__item gallery__item-9">
+                                <img src="~/Images/ms1.png" alt="Image">
+                            </figure>
+                            break;
+                        case 2:
+                            <figure class="gallery__item gallery__item-9">
+                                <img src="~/Images/ms2.png" alt="Image">
+                            </figure>
+                            break;
+                        case 3:
+                            <figure class="gallery__item gallery__item-9">
+                                <img src="~/Images/ms3.png" alt="Image">
+                            </figure>
+                            break;
+                        case 4:
+                            <figure class="gallery__item gallery__item-9">
+                                <img src="~/Images/ms4.png" alt="Image">
+                            </figure>
+                            break;
+                        case 5:
+                            <figure class="gallery__item gallery__item-9">
+                                <img src="~/Images/ms5.png" alt="Image">
+                            </figure>
+                            break;
+                        case 6:
+                            <figure class="gallery__item gallery__item-9">
+                                <img src="~/Images/ms6.png" alt="Image">
+                            </figure>
+                            break;
+                        case 7:
+                            <figure class="gallery__item gallery__item-9">
+                                <img src="~/Images/ms7.jpg" alt="Image">
+                            </figure>
+                            break;
+
+                        case 8:
+                            <figure class="gallery__item gallery__item-9">
+                                <img src="~/Images/ms8.png" alt="Image">
+                            </figure>
+                            break;
+                    }
+                }
+            }
+        }
+    </div>
+
+    <div class="form-group">
+        <div style="display: block; margin-left: 45%;">
+            <input type="submit" value="Home Page" class="btn btn-default"/>
+        </div>
+    </div>
+    }
+</body>
+</html>

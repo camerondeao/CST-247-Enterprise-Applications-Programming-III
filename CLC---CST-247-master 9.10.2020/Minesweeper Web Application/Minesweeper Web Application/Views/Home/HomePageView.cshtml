@@ -1,0 +1,61 @@
+﻿@model Minesweeper_Web_Application.Models.UserModel
+
+@*
+    Joey Cooper
+    Version 1
+    899-2020
+    Created the Home Page View with Radio Buttons to select which page to go to as well as routing the
+    Select button to the home page for testing purposes.
+*@
+
+@{
+    /**/
+    ViewBag.Title = "HomePageView";
+}
+
+@* Start creating the Form for the user *@
+<h2>Welcome to the Minesweeper Application!</h2>
+
+@using (Html.BeginForm("GetSelectedOption", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4 style="font-weight: bold;">Hello @Html.DisplayFor(m => m.FirstName)!</h4>
+    <h4>Please select one of the following options:</h4><hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <form action=View("/Views/Login/Login.cshtml")>
+        <div class="form-group">
+            <div class="col-md90">
+                <div class="form-group">
+                    <div class="col-md90">
+                        @Html.RadioButton("Selection", "Play", new { @checked = true })
+                        @Html.Label("New Game")
+                    </div>
+
+                    <!-- Radio button for saved game; will be used in later implementation -->
+                    <div class="col-md90">
+                        @Html.RadioButton("Selection", "Continue_Play")
+                        @Html.Label("Continue Game")
+                    </div>
+
+                    <div class="col-md90">
+                        @Html.RadioButton("Selection", "HighScores")
+                        @Html.Label("View High Scores")
+                    </div>
+                    <div class="col-md90">
+                        @Html.RadioButton("Selection", "Profile")
+                        @Html.Label("View Profile")
+                    </div>
+                    <div class="col-md90">
+                        @Html.RadioButton("Selection", "Logout")
+                        @Html.Label("Logout")
+                    </div>
+                </div>
+                <input type="submit" value="Select" class="btn btn-default" />
+            </div>
+        </div>
+    </form>
+</div>
+}
+
