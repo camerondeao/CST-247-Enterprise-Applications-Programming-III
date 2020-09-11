@@ -40,14 +40,19 @@ namespace Minesweeper_Web_Application.Controllers
         [HttpPost]
         public ActionResult GetSelectedOption(FormCollection choice)
         {
+<<<<<<< HEAD
             //Log to logfile
             logger.Error(ex, "User selected an option");
+=======
+            
+>>>>>>> 5fe7e8fabf7ea13a0952032f1716bcbee315e97d
 
             string result = choice["Selection"].ToString();
             Debug.WriteLine("Radio button value: " + result);
             switch (result)
             {
                 case "Play":
+<<<<<<< HEAD
                     {
                         //Log to logfile
                         logger.Error(ex, "User is playing new game");
@@ -80,6 +85,30 @@ namespace Minesweeper_Web_Application.Controllers
                     }
 
                 case "Logout":
+=======
+                    return RedirectToAction("Index", "Game");
+
+                case "HighScores":
+                    List<LeaderBoard> dataScores = new List<LeaderBoard>();
+                    LeaderBoardService service = new LeaderBoardService();
+
+                    //This commented call exists only for testing purposes. 
+                    //service.InsertHighScore(UserManagement.Instance._loggedUser, 251.34m);
+
+                    dataScores = service.GetScores(dataScores);
+
+                    return View("HighScores", dataScores);
+
+                case "Profile":
+                    return View("UserProfile", UserManagement.Instance._loggedUser);
+
+                case "Logout":
+                    Debug.WriteLine("Logged user: " + UserManagement.Instance._loggedUser.UserName);
+
+                    UserManagement.Instance.LogOutUser();
+
+                    if(UserManagement.Instance._loggedUser != null)
+>>>>>>> 5fe7e8fabf7ea13a0952032f1716bcbee315e97d
                     {
                         //Log to logfile
                         logger.Error(ex, "User is logging out");
@@ -106,6 +135,13 @@ namespace Minesweeper_Web_Application.Controllers
 
                         break;
                     }
+<<<<<<< HEAD
+=======
+                    return RedirectToAction("Index", "Login");
+
+                default:
+                    break;
+>>>>>>> 5fe7e8fabf7ea13a0952032f1716bcbee315e97d
             }
             return View("HomePageView");
         }

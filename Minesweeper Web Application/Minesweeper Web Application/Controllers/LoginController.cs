@@ -49,9 +49,12 @@ namespace Minesweeper_Web_Application.Controllers
             }
             else
             {
+<<<<<<< HEAD
                 //Log to logfile
                 logger.Error(ex, "User could not log in");
 
+=======
+>>>>>>> 5fe7e8fabf7ea13a0952032f1716bcbee315e97d
                 Debug.WriteLine("Login failed!");
                 return View("LoginFailed");
             }

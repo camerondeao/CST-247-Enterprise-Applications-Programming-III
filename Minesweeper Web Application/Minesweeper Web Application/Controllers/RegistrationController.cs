@@ -35,9 +35,12 @@ namespace Minesweeper_Web_Application.Controllers
 
             if(service.CheckUser(model))
             {
+<<<<<<< HEAD
                 //Log to logfile
                 logger.Error(ex, "User cannot create new account; existing username");
 
+=======
+>>>>>>> 5fe7e8fabf7ea13a0952032f1716bcbee315e97d
                 ModelState.AddModelError("Username", "This username is in use.");
                 return View("Registration");
             }

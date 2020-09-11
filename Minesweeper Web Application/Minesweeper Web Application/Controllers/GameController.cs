@@ -9,7 +9,10 @@ using System.IO;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using Minesweeper_Web_Application.Services.Business;
+<<<<<<< HEAD
 using NLog;
+=======
+>>>>>>> 5fe7e8fabf7ea13a0952032f1716bcbee315e97d
 
 namespace Minesweeper_Web_Application.Controllers
 {
@@ -24,6 +27,7 @@ namespace Minesweeper_Web_Application.Controllers
         public static List<GameSquareModel> squares = null;
         public static DateTime startTime;
 
+<<<<<<< HEAD
         //Logger variables
         Logger logger = LogManager.GetLogger("fileLogger");
         readonly ArithmeticException ex;
@@ -33,6 +37,10 @@ namespace Minesweeper_Web_Application.Controllers
             //Log to logfile
             logger.Error(ex, "User started new game");
 
+=======
+        public ActionResult Index()
+        {
+>>>>>>> 5fe7e8fabf7ea13a0952032f1716bcbee315e97d
             startTime = DateTime.Now;
             squares = new List<GameSquareModel>();
             board = new GameBoardModel(squares, row, col);
@@ -81,6 +89,7 @@ namespace Minesweeper_Web_Application.Controllers
 
             if(squaresRemaining == numofBombs)
             {
+<<<<<<< HEAD
                 //Log to logfile
                 logger.Error(ex, "User won game");
 
@@ -89,6 +98,11 @@ namespace Minesweeper_Web_Application.Controllers
 
                 //This line gave me an error when testing the Logging services -- FYI
                 //Not sure if it has to do with backspacing to complete the board or not
+=======
+                TimeSpan elapsed = (DateTime.Now - startTime);
+                decimal finalTime = Math.Round((decimal)elapsed.TotalSeconds, 2);
+
+>>>>>>> 5fe7e8fabf7ea13a0952032f1716bcbee315e97d
                 Debug.WriteLine(String.Format("{0} start time, {1] end time", startTime, DateTime.Now));
                 Debug.WriteLine("Difference in time.");
                 Debug.WriteLine(String.Format("{0} days, {1} hours, {2} minutes, {3} seconds", elapsed.Days, elapsed.Hours, elapsed.Minutes, elapsed.Seconds));
