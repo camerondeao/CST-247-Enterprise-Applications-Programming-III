@@ -1,5 +1,6 @@
 ﻿using Minesweeper_Web_Application.Models;
 using Minesweeper_Web_Application.Services.Business;
+using Minesweeper_Web_Application.Services.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -37,6 +38,8 @@ namespace Minesweeper_Web_Application.Controllers
                     return RedirectToAction("Index", "Game");
                 case "HighScores":
                     return View("HighScores");
+                case "Load":
+                    return RedirectToAction("LoadGame", "Game");
                 case "Profile":
                     return View("UserProfile", UserManagement.Instance._loggedUser);
                 case "Logout":
@@ -51,6 +54,10 @@ namespace Minesweeper_Web_Application.Controllers
                         Debug.WriteLine("No user is logged into the application");
                     }
                     return RedirectToAction("Index", "Login");
+                case "Delete":
+                    GameDAO gameDAO = new GameDAO();
+                    gameDAO.DeleteScore(UserManagement.Instance._loggedUser);
+                    return View("HomePageView");
                 default:
                     break;
             }

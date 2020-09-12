@@ -147,6 +147,7 @@
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Business\SecurityService.cs" />
+    <Compile Include="Services\Data\GameDAO.cs" />
     <Compile Include="Services\Data\SecurityDAO.cs" />
     <Compile Include="Services\Gameplay\GameplayService.cs" />
   </ItemGroup>

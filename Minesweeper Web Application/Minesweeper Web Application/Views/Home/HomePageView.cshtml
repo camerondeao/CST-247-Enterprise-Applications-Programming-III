@@ -33,6 +33,10 @@
                         @Html.Label("Play Minesweeper")
                     </div>
                     <div class="col-md90">
+                        @Html.RadioButton("Selection", "Load", new { @checked = true })
+                        @Html.Label("Load Game")
+                    </div>
+                    <div class="col-md90">
                         @Html.RadioButton("Selection", "HighScores")
                         @Html.Label("View High Scores")
                     </div>
@@ -43,6 +47,10 @@
                     <div class="col-md90">
                         @Html.RadioButton("Selection", "Logout")
                         @Html.Label("Logout")
+                    </div>
+                    <div class="col-md90">
+                        @Html.RadioButton("Selection", "Delete")
+                        @Html.Label("DELETE SAVE")
                     </div>
                 </div>
                 <input type="submit" value="Select" class="btn btn-default" />

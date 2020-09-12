@@ -115,5 +115,9 @@
 
         </div>
     }
+    @using (Html.BeginForm("SaveGame", "Game"))
+    {
+        <input type="submit" value="Save Game" />
+    }
 </body>
 </html>
