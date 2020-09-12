@@ -14,10 +14,6 @@ namespace Minesweeper_Web_Application.Controllers
 {
     public class RegistrationController : Controller
     {
-        //Logger variables
-        //Logger logger = LogManager.GetLogger("fileLogger");
-        //readonly ArithmeticException ex;
-
         // GET: Registration
         public ActionResult Index()
         {
@@ -27,14 +23,11 @@ namespace Minesweeper_Web_Application.Controllers
         [HttpPost]
         public ActionResult RegisterAccount(UserModel model)
         {
-            //Log to logfile
-            //logger.Error(ex, "User attempting to register new account");
-
             SecurityService service = new SecurityService();
 
             if(service.CheckUser(model))
             {
-                MineSweeperLogger.GetInstance().Warning("User attempted account creation with " + model.UserName + " already registered.");
+                MineSweeperLogger.GetInstance().Warning(String.Format("User attempted account creation with {0} already registered.", model.UserName));
                 ModelState.AddModelError("Username", "This username is in use.");
                 return View("Registration");
             }
@@ -50,8 +43,6 @@ namespace Minesweeper_Web_Application.Controllers
             }
             else
             {
-                //Log to logfile
-                //logger.Error(ex, "User was unable to create new account");
                 MineSweeperLogger.GetInstance().Warning(model.UserName + " failed to create an account.");
                 return View("Registration");
             }

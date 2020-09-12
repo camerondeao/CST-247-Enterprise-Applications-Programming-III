@@ -12,7 +12,7 @@ namespace Minesweeper_Web_Application.Services.Data
 {
     public class LeaderBoardDAO
     {
-        string connectionStr = "Data Source=(localdb)\\MSSQLLocalDB;initial catalog=cst247_minesweeper ;Integrated Security=True;";
+        readonly string connectionStr = "Data Source=(localdb)\\MSSQLLocalDB;initial catalog=cst247_minesweeper ;Integrated Security=True;";
         public void InsertHighScore(UserModel user, decimal time, int totalClicks)
         {
             //If this returns true we'll break out of the method.

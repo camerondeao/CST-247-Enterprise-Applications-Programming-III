@@ -69,6 +69,7 @@
                 <th scope="col">Rank</th>
                 <th scope="col">Username</th>
                 <th scope="col">Score - Seconds</th>
+                <th scope="col">Total Clicks</th>
             </tr>
 
             @foreach(var data in Model)
@@ -77,6 +78,7 @@
                     <td>@Html.DisplayFor(modelItem => data.Rank)</td>
                     <td>@Html.DisplayFor(modelItem => data.Username)</td>
                     <td>@Html.DisplayFor(modelItem => data.Time)</td>
+                    <td>@Html.DisplayFor(modelItem => data.TotalClicks)</td>
                 </tr>
             }
 

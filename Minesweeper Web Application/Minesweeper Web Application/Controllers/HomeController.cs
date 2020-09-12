@@ -31,29 +31,29 @@ namespace Minesweeper_Web_Application.Controllers
         [HttpPost]
         public ActionResult GetSelectedOption(FormCollection choice)
         {
+            GameDAO gameDAO = new GameDAO();
             string result = choice["Selection"].ToString();
             Debug.WriteLine("Radio button value: " + result);
             switch (result)
             {
                 case "Play":
                     return RedirectToAction("Index", "Game");
-<<<<<<< HEAD
-                
-                case "HighScores":
-                    List<LeaderBoard> dataScores = new List<LeaderBoard>();
-                    LeaderBoardService service = new LeaderBoardService();
-                    //This commented call exists only for testing purposes. 
-                    //service.InsertHighScore(UserManagement.Instance._loggedUser, 251.34m);
-=======
-
+                    
                 case "Load":
-                    return RedirectToAction("LoadGame", "Game");
+                    
+                    if (!gameDAO.CheckIfScoreExists(UserManagement.Instance._loggedUser))
+                    {
+                        return View("HomePageView", UserManagement.Instance._loggedUser);
+                    }
+                    else
+                    {
+                        return RedirectToAction("LoadGame", "Game");
+                    }
 
                 case "HighScores":
                     List<LeaderBoard> dataScores = new List<LeaderBoard>();
                     LeaderBoardService service = new LeaderBoardService();
 
->>>>>>> Mywork4
                     dataScores = service.GetScores(dataScores);
                     return View("HighScores", dataScores);
                     
@@ -61,10 +61,7 @@ namespace Minesweeper_Web_Application.Controllers
                     return View("UserProfile", UserManagement.Instance._loggedUser);
                     
                 case "Logout":
-<<<<<<< HEAD
-=======
                     Debug.WriteLine("Logged user: " + UserManagement.Instance._loggedUser.UserName);
->>>>>>> Mywork4
                     UserManagement.Instance.LogOutUser();
                     if(UserManagement.Instance._loggedUser != null)
                     {
@@ -83,7 +80,7 @@ namespace Minesweeper_Web_Application.Controllers
                     break;
 
                 case "Delete":
-                    GameDAO gameDAO = new GameDAO();
+                    //GameDAO gameDAO = new GameDAO();
                     gameDAO.DeleteScore(UserManagement.Instance._loggedUser);
                     return View("HomePageView");
 

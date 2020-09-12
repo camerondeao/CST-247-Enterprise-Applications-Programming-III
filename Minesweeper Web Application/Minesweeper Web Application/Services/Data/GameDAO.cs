@@ -1,4 +1,5 @@
 ﻿using Minesweeper_Web_Application.Models;
+using Minesweeper_Web_Application.Services.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -10,10 +11,10 @@ namespace Minesweeper_Web_Application.Services.Data
 {
     public class GameDAO
     {
-        string connectionStr = "Data Source=(localdb)\\MSSQLLocalDB;initial catalog=cst247_minesweeper ;Integrated Security=True;";
+        readonly string connectionStr = "Data Source=(localdb)\\MSSQLLocalDB;initial catalog=cst247_minesweeper ;Integrated Security=True;";
         SqlConnection conn = null;
 
-        public bool SaveGameBombs(GameBoardModel board, UserModel user)
+        public bool SaveGameBombs(GameBoardModel board, UserModel user, int totalClicks)
         {
             bool saved = false;
             EstablishConnection();
@@ -22,26 +23,26 @@ namespace Minesweeper_Web_Application.Services.Data
             {
                 if(!CheckIfScoreExists(user))
                 {
-                    NewUserScore(board, user);
+                    NewUserScore(board, user, totalClicks);
                 }
                 else
                 {
-                    UpdateUserScore(board, user);
+                    UpdateUserScore(board, user, totalClicks);
                 }
             }
             else
             {
-                InsertUserScore(board, user);
+                InsertUserScore(board, user, totalClicks);
             }
 
             return saved;
         }
 
-        public void UpdateUserScore(GameBoardModel board, UserModel user)
+        public void UpdateUserScore(GameBoardModel board, UserModel user, int totalClicks)
         {
-            //Debug.WriteLine("WE ARE UPDATING THE ESTABLISHED SCORE!");
             string query = "UPDATE dbo.gamestate SET SAVEBOMB1 = @BOMB1, SAVEBOMB2 = @BOMB2, SAVEBOMB3 = @BOMB3, SAVEBOMB4 = @BOMB4, " +
-                "SAVEVISITED1 = @SAVEVISITED1, SAVEVISITED2 = @SAVEVISITED2, SAVEVISITED3 = @SAVEVISITED3, SAVEVISITED4 = @SAVEVISITED4 WHERE USERNAME = @USERNAME";
+                "SAVEVISITED1 = @SAVEVISITED1, SAVEVISITED2 = @SAVEVISITED2, SAVEVISITED3 = @SAVEVISITED3, SAVEVISITED4 = @SAVEVISITED4, " +
+                "CURRENTCLICKS = @TOTALCLICKS WHERE USERNAME = @USERNAME";
             SqlCommand command = new SqlCommand(query, conn);
 
             try
@@ -55,9 +56,12 @@ namespace Minesweeper_Web_Application.Services.Data
                 command.Parameters.Add("@SAVEVISITED2", System.Data.SqlDbType.BigInt).Value = board.SaveVisited2;
                 command.Parameters.Add("@SAVEVISITED3", System.Data.SqlDbType.BigInt).Value = board.SaveVisited3;
                 command.Parameters.Add("@SAVEVISITED4", System.Data.SqlDbType.BigInt).Value = board.SaveVisited4;
+                command.Parameters.Add("@TOTALCLICKS", System.Data.SqlDbType.Int).Value = totalClicks;
 
                 Debug.WriteLine("UPDATING Data going into DB: Bomb1:" + board.SaveBomb1 + " Bomb2:" + board.SaveBomb2 + " Bomb3:" + board.SaveBomb3 + " Bomb4:" + board.SaveBomb4 +
                     " Visited1:" + board.SaveVisited1 + " Visited2:" + board.SaveVisited2 + " Visited3:" + board.SaveVisited3 + " Visted4:" + board.SaveVisited4);
+
+                MineSweeperLogger.GetInstance().Info(String.Format("Updated board state for {0}.", user.UserName));
 
                 conn.Open();
                 command.ExecuteNonQuery();
@@ -66,6 +70,7 @@ namespace Minesweeper_Web_Application.Services.Data
             catch (SqlException e)
             {
                 Debug.WriteLine("Error generated. Details: " + e);
+                MineSweeperLogger.GetInstance().Error(e, String.Format("Error occurred updating {0}'s board state.", user.UserName));
             }
             finally
             {
@@ -73,10 +78,11 @@ namespace Minesweeper_Web_Application.Services.Data
             }
         }
 
-        public void NewUserScore(GameBoardModel board, UserModel user)
+        public void NewUserScore(GameBoardModel board, UserModel user, int totalClicks)
         {
             string query = "UPDATE dbo.gamestate SET SAVEBOMB1 = @BOMB1, SAVEBOMB2 = @BOMB2, SAVEBOMB3 = @BOMB3, SAVEBOMB4 = @BOMB4, " +
-                "SAVEVISITED1 = @SAVEVISITED1, SAVEVISITED2 = @SAVEVISITED2, SAVEVISITED3 = @SAVEVISITED3, SAVEVISITED4 = @SAVEVISITED4 WHERE USERNAME = @USERNAME";
+                "SAVEVISITED1 = @SAVEVISITED1, SAVEVISITED2 = @SAVEVISITED2, SAVEVISITED3 = @SAVEVISITED3, SAVEVISITED4 = @SAVEVISITED4, " +
+                "CURRENTCLICKS = @TOTALCLICKS WHERE USERNAME = @USERNAME";
             SqlCommand command = new SqlCommand(query, conn);
 
             try
@@ -90,16 +96,18 @@ namespace Minesweeper_Web_Application.Services.Data
                 command.Parameters.Add("@SAVEVISITED2", System.Data.SqlDbType.BigInt).Value = board.SaveVisited2;
                 command.Parameters.Add("@SAVEVISITED3", System.Data.SqlDbType.BigInt).Value = board.SaveVisited3;
                 command.Parameters.Add("@SAVEVISITED4", System.Data.SqlDbType.BigInt).Value = board.SaveVisited4;
+                command.Parameters.Add("@TOTALCLICKS", System.Data.SqlDbType.Int).Value = totalClicks;
 
                 Debug.WriteLine("Data going into DB: Bomb1:" + board.SaveBomb1 + " Bomb2:" + board.SaveBomb2 + " Bomb3:" + board.SaveBomb3 + " Bomb4:" + board.SaveBomb4+
                     " Visited1:"+board.SaveVisited1 + " Visited2:" + board.SaveVisited2 + " Visited3:" + board.SaveVisited3 + " Visted4:" + board.SaveVisited4);
-
+                MineSweeperLogger.GetInstance().Info(String.Format("Inserted new board state for {0}.", user.UserName));
                 conn.Open();
                 command.ExecuteNonQuery();
             }
             catch (SqlException e)
             {
                 Debug.WriteLine("Error generated. Details: " + e);
+                MineSweeperLogger.GetInstance().Error(e, String.Format("Error occurred when inserting board state for {0}.", user.UserName));
             }
             finally
             {
@@ -110,15 +118,15 @@ namespace Minesweeper_Web_Application.Services.Data
         public void DeleteScore(UserModel user)
         {
             EstablishConnection();
-            //Debug.WriteLine("DELETING SCORE");
             string query = "UPDATE dbo.gamestate SET SAVEBOMB1 = @BOMB1, SAVEBOMB2 = @BOMB2, SAVEBOMB3 = @BOMB3, SAVEBOMB4 = @BOMB4, " +
-                "SAVEVISITED1 = @SAVEVISITED1, SAVEVISITED2 = @SAVEVISITED2, SAVEVISITED3 = @SAVEVISITED3, SAVEVISITED4 = @SAVEVISITED4 WHERE USERNAME = @USERNAME";
+                "SAVEVISITED1 = @SAVEVISITED1, SAVEVISITED2 = @SAVEVISITED2, SAVEVISITED3 = @SAVEVISITED3, SAVEVISITED4 = @SAVEVISITED4, " +
+                "CURRENTCLICKS = @TOTALCLICKS WHERE USERNAME = @USERNAME";
             SqlCommand command = new SqlCommand(query, conn);
 
             try
             {
                 command.Parameters.Add("@USERNAME", System.Data.SqlDbType.VarChar, 25).Value = user.UserName;
-                command.Parameters.Add("@BOMB1", System.Data.SqlDbType.BigInt).Value = 0;
+                command.Parameters.Add("@BOMB1", System.Data.SqlDbType.BigInt).Value = -1;
                 command.Parameters.Add("@BOMB2", System.Data.SqlDbType.BigInt).Value = 0;
                 command.Parameters.Add("@BOMB3", System.Data.SqlDbType.BigInt).Value = 0;
                 command.Parameters.Add("@BOMB4", System.Data.SqlDbType.BigInt).Value = 0;
@@ -126,13 +134,15 @@ namespace Minesweeper_Web_Application.Services.Data
                 command.Parameters.Add("@SAVEVISITED2", System.Data.SqlDbType.BigInt).Value = 0;
                 command.Parameters.Add("@SAVEVISITED3", System.Data.SqlDbType.BigInt).Value = 0;
                 command.Parameters.Add("@SAVEVISITED4", System.Data.SqlDbType.BigInt).Value = 0;
-
+                command.Parameters.Add("@TOTALCLICKS", System.Data.SqlDbType.Int).Value = 0;
                 conn.Open();
                 command.ExecuteNonQuery();
+                MineSweeperLogger.GetInstance().Info(String.Format("Deleted board state for {0}.", user.UserName));
             }
             catch(SqlException e)
             {
                 Debug.WriteLine("Error generated. Details: " + e);
+                MineSweeperLogger.GetInstance().Error(e, String.Format("Error occurred when deleting {0}'s board state.", user.UserName));
             }
             finally
             {
@@ -140,11 +150,10 @@ namespace Minesweeper_Web_Application.Services.Data
             }
         }
 
-        public void InsertUserScore(GameBoardModel board, UserModel user)
+        public void InsertUserScore(GameBoardModel board, UserModel user, int totalClicks)
         {
-            //Debug.WriteLine("WE ARE INSERTING A SCORE");
-            string query = "INSERT INTO dbo.gamestate (USERNAME, SAVEBOMB1, SAVEBOMB2, SAVEBOMB3, SAVEBOMB4, SAVEVISITED1, SAVEVISITED2, SAVEVISITED3, SAVEVISITED4)"
-                + " VALUES (@USERNAME, @SAVEBOMB1, @SAVEBOMB2, @SAVEBOMB3, @SAVEBOMB4, @SAVEVISITED1, @SAVEVISITED2, @SAVEVISITED3, @SAVEVISITED4)";
+            string query = "INSERT INTO dbo.gamestate (USERNAME, SAVEBOMB1, SAVEBOMB2, SAVEBOMB3, SAVEBOMB4, SAVEVISITED1, SAVEVISITED2, SAVEVISITED3, SAVEVISITED4, CURRENTCLICKS)"
+                + " VALUES (@USERNAME, @SAVEBOMB1, @SAVEBOMB2, @SAVEBOMB3, @SAVEBOMB4, @SAVEVISITED1, @SAVEVISITED2, @SAVEVISITED3, @SAVEVISITED4, @TOTALCLICKS)";
             SqlCommand command = new SqlCommand(query, conn);
 
             try
@@ -158,13 +167,16 @@ namespace Minesweeper_Web_Application.Services.Data
                 command.Parameters.AddWithValue("@SAVEVISITED2", board.SaveVisited2);
                 command.Parameters.AddWithValue("@SAVEVISITED3", board.SaveVisited3);
                 command.Parameters.AddWithValue("@SAVEVISITED4", board.SaveVisited4);
+                command.Parameters.AddWithValue("@TOTALCLICKS", totalClicks);
 
                 conn.Open();
                 command.ExecuteNonQuery();
+                MineSweeperLogger.GetInstance().Info(String.Format("Inserted new board state for {0}.", user.UserName));
             }
             catch(SqlException e)
             {
                 Debug.WriteLine("Error generated. Details: " + e);
+                MineSweeperLogger.GetInstance().Error(e, String.Format("Error occurred when inserting board state for {0}.", user.UserName));
             }
             finally
             {
@@ -192,6 +204,7 @@ namespace Minesweeper_Web_Application.Services.Data
             catch(SqlException e)
             {
                 Debug.WriteLine("Error generated. Details: " + e);
+                MineSweeperLogger.GetInstance().Error(e, String.Format("Error occurred when check board state for {0}.", user.UserName));
             }
             finally
             {
@@ -203,7 +216,11 @@ namespace Minesweeper_Web_Application.Services.Data
 
         public bool CheckIfScoreExists(UserModel user)
         {
-            string query = "SELECT 1 FROM dbo.gamestate WHERE USERNAME = @Username AND SAVEBOMB1 != 0";
+            if(conn == null)
+            {
+                EstablishConnection();
+            }
+            string query = "SELECT 1 FROM dbo.gamestate WHERE USERNAME = @Username AND SAVEBOMB1 != -1";
             SqlCommand command = new SqlCommand(query, conn);
             try
             {
@@ -213,7 +230,6 @@ namespace Minesweeper_Web_Application.Services.Data
                 SqlDataReader reader = command.ExecuteReader();
                 if(reader.HasRows)
                 {
-                    //Debug.WriteLine("A SCORE EXISTS WITHIN THE DATABASE! RETURNING TRUE");
                     conn.Close();
                     return true;
                 }
@@ -221,12 +237,12 @@ namespace Minesweeper_Web_Application.Services.Data
             catch(SqlException e)
             {
                 Debug.WriteLine("Error generated. Details: " + e);
+                MineSweeperLogger.GetInstance().Error(e, String.Format("An error occurred when checking board state for {0}.", user.UserName));
             }
             finally
             {
                 conn.Close();
             }
-            //Debug.WriteLine("A SCORE DOES NOT EXIST IN THE DATABASE. RETURNING FALSE");
             return false;
         }
 
@@ -254,12 +270,14 @@ namespace Minesweeper_Web_Application.Services.Data
                         inc.Add(reader.GetInt64(7));
                         inc.Add(reader.GetInt64(8));
                         inc.Add(reader.GetInt64(9));
+                        inc.Add(reader.GetInt32(10));
                     }
                 }
             }
             catch(SqlException e)
             {
                 Debug.WriteLine("Error generated. Details: " + e);
+                MineSweeperLogger.GetInstance().Error(e, String.Format("An error occurred during retrieval of board state for {0}.", user.UserName));
             }
             finally
             {

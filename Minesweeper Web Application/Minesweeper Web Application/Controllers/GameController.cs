@@ -10,14 +10,11 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using Minesweeper_Web_Application.Services.Data;
 using Minesweeper_Web_Application.Services.Business;
-<<<<<<< HEAD
 using NLog;
 using Minesweeper_Web_Application.Services.Utility;
 using System.Web.Script.Serialization;
 using System.Reflection;
-=======
 using Minesweeper_Web_Application.Services.Gameplay;
->>>>>>> Mywork4
 
 namespace Minesweeper_Web_Application.Controllers
 {
@@ -30,19 +27,13 @@ namespace Minesweeper_Web_Application.Controllers
         public static int safeSquares = (row * col - numofBombs);
         public static GameBoardModel board = null;
         public static List<GameSquareModel> squares = null;
-<<<<<<< HEAD
         public static DateTime startTime;
         public static int mouseClicks;
 
         public ActionResult Index()
         {
-            MineSweeperLogger.GetInstance().Info(new JavaScriptSerializer().Serialize(UserManagement.Instance._loggedUser.UserName + " has started a game"));
+            MineSweeperLogger.GetInstance().Info(String.Format("{0} has started a game.", UserManagement.Instance._loggedUser.UserName));
             startTime = DateTime.Now;
-=======
-
-        public ActionResult Index()
-        {
->>>>>>> Mywork4
             squares = new List<GameSquareModel>();
             board = new GameBoardModel(squares, row, col);
             board.PlaceBombs(squares, numofBombs);
@@ -69,7 +60,9 @@ namespace Minesweeper_Web_Application.Controllers
             board.SaveVisited2 = values[5];
             board.SaveVisited3 = values[6];
             board.SaveVisited4 = values[7];
+            mouseClicks = (int)values[8];
 
+            Debug.WriteLine("INC MOUSE CLICKS: " + mouseClicks);
             board.ConvertBombToList(board, squares);
             board.ConvertVisitedToList(board, squares);
 
@@ -86,11 +79,9 @@ namespace Minesweeper_Web_Application.Controllers
             GameplayService service = new GameplayService();
             service.Convert2DArray(squares, 12, 12);
             board.BombToString(squares);
-<<<<<<< HEAD
+
             Debug.WriteLine(startTime);
-            mouseClicks = 0;
-            return View("Game");
-=======
+            //mouseClicks = 0;
 
             Debug.WriteLine("Displaying board");
             int count = 0;
@@ -105,17 +96,13 @@ namespace Minesweeper_Web_Application.Controllers
             }
             ViewBag.squares = squares;
             return View("Game", squares);
->>>>>>> Mywork4
         }
 
         [HttpPost]
         public PartialViewResult OnButtonClick(string mine)
         {
-<<<<<<< HEAD
             mouseClicks++;
-=======
 
->>>>>>> Mywork4
             int value = Int32.Parse(mine);
             int index = value - 1;
             int r = index / row;
@@ -124,14 +111,10 @@ namespace Minesweeper_Web_Application.Controllers
 
             if (squares[index].Bomb == 9)
             {
-<<<<<<< HEAD
-                MineSweeperLogger.GetInstance().Info(new JavaScriptSerializer().Serialize(UserManagement.Instance._loggedUser.UserName + " has lost a game"));
-
+                MineSweeperLogger.GetInstance().Info(String.Format("{0} has lost a game.", UserManagement.Instance._loggedUser.UserName));
                 ViewBag.squares = squares;
-                return View("Loser");
-=======
+                //return View("Loser");
                 EndGame("Lose");
->>>>>>> Mywork4
             }
             else
             {
@@ -150,25 +133,23 @@ namespace Minesweeper_Web_Application.Controllers
 
             if(squaresRemaining == numofBombs)
             {
-<<<<<<< HEAD
-                MineSweeperLogger.GetInstance().Info(new JavaScriptSerializer().Serialize(UserManagement.Instance._loggedUser.UserName + " has won a game"));
+                MineSweeperLogger.GetInstance().Info(String.Format("{0} has won a game.", UserManagement.Instance._loggedUser.UserName));
 
                 TimeSpan elapsed = (DateTime.Now - startTime);
                 decimal finalTime = Math.Round((decimal)elapsed.TotalSeconds, 2);
 
-                Debug.WriteLine(String.Format("{0} start time, {1] end time", startTime, DateTime.Now));
+                Debug.WriteLine(String.Format("{0} start time, {1} end time", startTime, DateTime.Now));
                 Debug.WriteLine("Difference in time.");
                 Debug.WriteLine(String.Format("{0} days, {1} hours, {2} minutes, {3} seconds", elapsed.Days, elapsed.Hours, elapsed.Minutes, elapsed.Seconds));
 
                 LeaderBoardService service = new LeaderBoardService();
                 service.InsertHighScore(UserManagement.Instance._loggedUser, finalTime, mouseClicks);
-=======
                 EndGame("Win");
             }
->>>>>>> Mywork4
 
             return PartialView("_UpdateGame", squares);
         }
+
         public ActionResult EndGame(string finish)
         {
             GameDAO gameDAO = new GameDAO();
@@ -195,10 +176,6 @@ namespace Minesweeper_Web_Application.Controllers
 
             Debug.WriteLine("REMAINING CELLS! " + num);
 
-            //Debug.WriteLine("BEFORE CONVERSION: " + board.SaveBomb1 + board.SaveBomb2 + board.SaveBomb3 + board.SaveBomb4
-            //   + board.SaveVisited1 + board.SaveVisited2 + board.SaveVisited3 + board.SaveVisited4);
-
-
             Debug.WriteLine("Displaying board");
             int count = 0;
             for (int i = 0; i < 12 * 12; i++)
@@ -215,8 +192,8 @@ namespace Minesweeper_Web_Application.Controllers
             board.ConvertBombToInt(board, squares);
             board.ConvertVisitedToInt(board, squares);
 
-            GameDAO testing = new GameDAO();
-            testing.SaveGameBombs(board, UserManagement.Instance._loggedUser);
+            GameDAO gameDAO = new GameDAO();
+            gameDAO.SaveGameBombs(board, UserManagement.Instance._loggedUser, mouseClicks);
             
             return RedirectToAction("MainPage", "Home");
         }
