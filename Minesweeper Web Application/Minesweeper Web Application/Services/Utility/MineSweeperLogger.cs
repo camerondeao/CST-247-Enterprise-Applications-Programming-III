@@ -25,35 +25,35 @@ namespace Minesweeper_Web_Application.Services.Utility
         {
             if(MineSweeperLogger.logger == null)
             {
-                MineSweeperLogger.logger = LogManager.GetLogger("fileLogger");
+                MineSweeperLogger.logger = LogManager.GetLogger(logger);
             }
             return MineSweeperLogger.logger;
         }
 
         public void Debug(string message)
         {
-            GetLogger("fileLogger").Debug(message);
+            GetLogger("fileLogger").Debug(message + " - " + CallingType());
         }
 
         public void Error(Exception e, string message)
         {
-            GetLogger("fileLogger").Error(e, message);
+            GetLogger("fileLogger").Error(e, message + " - " + CallingType());
         }
 
         public void Info(string message)
         {
-            GetLogger("fileLogger").Info(message + " " + CallingType());
+            GetLogger("fileLogger").Info(message + " - " + CallingType());
         }
 
         public void Warning(string message)
         {   
-            GetLogger("fileLogger").Warn(message);
+            GetLogger("fileLogger").Warn(message + " - " + CallingType());
         }
 
         private static string CallingType()
         {
             StackFrame frame = new StackFrame(2);
-            string result = frame.GetMethod().Name + " HI " + frame.GetMethod().DeclaringType.Name;
+            string result = "Method: " + frame.GetMethod().Name + ", Class: " + frame.GetMethod().DeclaringType.Name;
             return result;
         }
     }

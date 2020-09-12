@@ -16,9 +16,9 @@ namespace Minesweeper_Web_Application.Services.Business
             return board.GetScores(inc);
         }
 
-        public void InsertHighScore(UserModel user, decimal time)
+        public void InsertHighScore(UserModel user, decimal time, int totalClicks)
         {
-            board.InsertHighScore(user, time);
+            board.InsertHighScore(user, time, totalClicks);
         }
     }
 }

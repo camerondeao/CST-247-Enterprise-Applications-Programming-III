@@ -26,6 +26,7 @@ namespace Minesweeper_Web_Application.Controllers
         public static GameBoardModel board = null;
         public static List<GameSquareModel> squares = null;
         public static DateTime startTime;
+        public static int mouseClicks;
 
         public ActionResult Index()
         {
@@ -37,10 +38,12 @@ namespace Minesweeper_Web_Application.Controllers
             ViewBag.squares = squares;
             board.BombToString(squares);
             Debug.WriteLine(startTime);
+            mouseClicks = 0;
             return View("Game");
         }
         public ActionResult OnButtonClick(string mine)
         {
+            mouseClicks++;
             int value = Int32.Parse(mine);
             int index = value - 1;
             int r = index / row;
@@ -81,7 +84,7 @@ namespace Minesweeper_Web_Application.Controllers
                 Debug.WriteLine(String.Format("{0} days, {1} hours, {2} minutes, {3} seconds", elapsed.Days, elapsed.Hours, elapsed.Minutes, elapsed.Seconds));
 
                 LeaderBoardService service = new LeaderBoardService();
-                service.InsertHighScore(UserManagement.Instance._loggedUser, finalTime);
+                service.InsertHighScore(UserManagement.Instance._loggedUser, finalTime, mouseClicks);
 
                 ViewBag.squares = squares;
                 return View("Winner");

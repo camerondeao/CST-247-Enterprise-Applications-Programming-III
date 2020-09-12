@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
 
@@ -10,5 +11,6 @@ namespace Minesweeper_Web_Application.Models
         public int Rank { get; set; }
         public string Username { get; set; }
         public decimal Time { get; set; }
+        public int TotalClicks { get; set; }
     }
 }

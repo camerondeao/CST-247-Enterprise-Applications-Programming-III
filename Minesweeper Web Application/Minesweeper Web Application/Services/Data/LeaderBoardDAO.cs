@@ -13,11 +13,11 @@ namespace Minesweeper_Web_Application.Services.Data
     public class LeaderBoardDAO
     {
         string connectionStr = "Data Source=(localdb)\\MSSQLLocalDB;initial catalog=cst247_minesweeper ;Integrated Security=True;";
-        public void InsertHighScore(UserModel user, decimal time)
+        public void InsertHighScore(UserModel user, decimal time, int totalClicks)
         {
             //If this returns true we'll break out of the method.
             //Only returns true if a user exists within the method.
-            if(CheckUserScore(user, time))
+            if(CheckUserScore(user, time, totalClicks))
             {
                 return;
             }
@@ -66,7 +66,7 @@ namespace Minesweeper_Web_Application.Services.Data
                         LeaderBoard user = new LeaderBoard();
                         user.Username = reader.GetString(1);
                         user.Time = reader.GetDecimal(2);
-
+                        user.TotalClicks = reader.GetInt32(3);
                         Debug.WriteLine(reader.GetString(1));
                         Debug.WriteLine(reader.GetDecimal(2));
 
@@ -94,7 +94,7 @@ namespace Minesweeper_Web_Application.Services.Data
             return inc;
         }
 
-        public bool CheckUserScore(UserModel user, decimal time)
+        public bool CheckUserScore(UserModel user, decimal time, int totalClicks)
         {
             bool newTimeCheck = false;
             string query = "SELECT * FROM dbo.leaderboard WHERE USERNAME = @Username";
@@ -116,7 +116,7 @@ namespace Minesweeper_Web_Application.Services.Data
                         //than the stored score for the user.
                         if(reader.GetDecimal(2) >= time)
                         {
-                            UpdateUserScore(user.UserName, time);
+                            UpdateUserScore(user.UserName, time, totalClicks);
                         }
                     }
                     newTimeCheck = true;
@@ -135,9 +135,9 @@ namespace Minesweeper_Web_Application.Services.Data
             return newTimeCheck;
         }
 
-        private void UpdateUserScore(string username, decimal time)
+        private void UpdateUserScore(string username, decimal time, int totalClicks)
         {
-            string updateQuery = "UPDATE dbo.leaderboard SET TIME = @Time WHERE USERNAME = @Username";
+            string updateQuery = "UPDATE dbo.leaderboard SET TIME = @Time, TOTALCLICKS = @TotalClicks WHERE USERNAME = @Username";
             SqlConnection conn = new SqlConnection(connectionStr);
             SqlCommand command = new SqlCommand(updateQuery, conn);
 
@@ -145,7 +145,7 @@ namespace Minesweeper_Web_Application.Services.Data
             {
                 command.Parameters.Add("@Username", System.Data.SqlDbType.VarChar, 25).Value = username;
                 command.Parameters.Add("@Time", System.Data.SqlDbType.Decimal).Value = time;
-
+                command.Parameters.Add("@TotalClicks", System.Data.SqlDbType.Int).Value = totalClicks;
                 conn.Open();
                 command.ExecuteNonQuery();
 

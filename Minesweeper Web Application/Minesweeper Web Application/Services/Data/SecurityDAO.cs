@@ -19,7 +19,7 @@ namespace Minesweeper_Web_Application.Services.Data
 
     public class SecurityDAO
     {
-        string connectionStr = "Data Source=(localdb)\\MSSQLLocalDB;initial catalog=cst247_minesweeper ;Integrated Security=True;";
+        readonly string connectionStr = "Data Source=(localdb)\\MSSQLLocalDB;initial catalog=cst247_minesweeper ;Integrated Security=True;";
         //const string key = "asdf78954wer7q5re72er54wr5654dsf";
 
         public bool CheckUsername(UserModel user)
@@ -41,7 +41,7 @@ namespace Minesweeper_Web_Application.Services.Data
             catch (SqlException e)
             {
                 Debug.WriteLine("Error generated. Details: " + e.ToString());
-                MineSweeperLogger.GetInstance().Error(e, "An error occurred.", this.GetType().Name, MethodBase.GetCurrentMethod().Name);
+                MineSweeperLogger.GetInstance().Error(e, "An error occurred checking username: " + user.UserName);
             }
             finally
             {
@@ -85,7 +85,7 @@ namespace Minesweeper_Web_Application.Services.Data
             catch (SqlException e)
             {
                 Debug.WriteLine("Error generated. Details: " + e.ToString());
-                MineSweeperLogger.GetInstance().Error(e, "An error occurred.", this.GetType().Name, MethodBase.GetCurrentMethod().Name);
+                MineSweeperLogger.GetInstance().Error(e, "An error occurred registering: " + user.UserName);
             }
             finally
             {
@@ -142,7 +142,7 @@ namespace Minesweeper_Web_Application.Services.Data
             catch(SqlException e)
             {
                 Debug.WriteLine("Error generated in retrieval. Details: " + e.ToString());
-                MineSweeperLogger.GetInstance().Error(e, "An error occurred.", this.GetType().Name, MethodBase.GetCurrentMethod().Name);
+                MineSweeperLogger.GetInstance().Error(e, "An error occurred finding: " + user.Username);
             }
             finally
             {

@@ -34,7 +34,7 @@ namespace Minesweeper_Web_Application.Controllers
 
             if (results)
             {
-                MineSweeperLogger.GetInstance().Info(model.Username.ToString() + " has logged into the application");
+                MineSweeperLogger.GetInstance().Info(model.Username.ToString() + " has logged into the application.");
                 Debug.WriteLine("Logged in User: " + UserManagement.Instance._loggedUser.UserName);
                 Debug.WriteLine("Login passed!");
                 //return View("LoginPassed");
@@ -42,7 +42,7 @@ namespace Minesweeper_Web_Application.Controllers
             }
             else
             {
-                MineSweeperLogger.GetInstance().Warning(model.Username.ToString() + " has failed a login attempt");
+                MineSweeperLogger.GetInstance().Warning(model.Username.ToString() + " has failed a login attempt.");
                 Debug.WriteLine("Login failed!");
                 return View("LoginFailed");
             }

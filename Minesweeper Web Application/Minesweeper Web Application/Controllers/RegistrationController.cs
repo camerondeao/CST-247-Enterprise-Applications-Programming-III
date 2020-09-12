@@ -52,7 +52,7 @@ namespace Minesweeper_Web_Application.Controllers
             {
                 //Log to logfile
                 //logger.Error(ex, "User was unable to create new account");
-                MineSweeperLogger.GetInstance().Warning(model.UserName + " failed to create an account");
+                MineSweeperLogger.GetInstance().Warning(model.UserName + " failed to create an account.");
                 return View("Registration");
             }
         }
