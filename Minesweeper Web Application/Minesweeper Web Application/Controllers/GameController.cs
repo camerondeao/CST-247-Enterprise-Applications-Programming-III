@@ -8,11 +8,16 @@ using System.Web.Mvc;
 using System.IO;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using Minesweeper_Web_Application.Services.Data;
 using Minesweeper_Web_Application.Services.Business;
+<<<<<<< HEAD
 using NLog;
 using Minesweeper_Web_Application.Services.Utility;
 using System.Web.Script.Serialization;
 using System.Reflection;
+=======
+using Minesweeper_Web_Application.Services.Gameplay;
+>>>>>>> Mywork4
 
 namespace Minesweeper_Web_Application.Controllers
 {
@@ -21,10 +26,11 @@ namespace Minesweeper_Web_Application.Controllers
     {
         public static int row = 12;
         public static int col = 12;
-        public static int numofBombs = 24;
+        public static int numofBombs = 12;
         public static int safeSquares = (row * col - numofBombs);
         public static GameBoardModel board = null;
         public static List<GameSquareModel> squares = null;
+<<<<<<< HEAD
         public static DateTime startTime;
         public static int mouseClicks;
 
@@ -32,18 +38,84 @@ namespace Minesweeper_Web_Application.Controllers
         {
             MineSweeperLogger.GetInstance().Info(new JavaScriptSerializer().Serialize(UserManagement.Instance._loggedUser.UserName + " has started a game"));
             startTime = DateTime.Now;
+=======
+
+        public ActionResult Index()
+        {
+>>>>>>> Mywork4
             squares = new List<GameSquareModel>();
             board = new GameBoardModel(squares, row, col);
             board.PlaceBombs(squares, numofBombs);
-            ViewBag.squares = squares;
             board.BombToString(squares);
+            ViewBag.squares = squares;
+            return View("Game", squares);
+        }
+
+        public ActionResult LoadGame()
+        {
+            GameDAO gameDAO = new GameDAO();
+            List<long> values = new List<long>();
+            squares = new List<GameSquareModel>();
+            board = new GameBoardModel(squares, row, col);
+
+            values = gameDAO.RetrieveUserScore(values, UserManagement.Instance._loggedUser);
+
+            board.SaveBomb1 = values[0];
+            board.SaveBomb2 = values[1];
+            board.SaveBomb3 = values[2];
+            board.SaveBomb4 = values[3];
+
+            board.SaveVisited1 = values[4];
+            board.SaveVisited2 = values[5];
+            board.SaveVisited3 = values[6];
+            board.SaveVisited4 = values[7];
+
+            board.ConvertBombToList(board, squares);
+            board.ConvertVisitedToList(board, squares);
+
+            int num = 0;
+            for (int i = 0; i < squares.Count; i++)
+            {
+                if (!squares[i].Visited)
+                {
+                    num++;
+                }
+            }
+            Debug.WriteLine("LOADED REMAINING CELLS! " + num);
+
+            GameplayService service = new GameplayService();
+            service.Convert2DArray(squares, 12, 12);
+            board.BombToString(squares);
+<<<<<<< HEAD
             Debug.WriteLine(startTime);
             mouseClicks = 0;
             return View("Game");
+=======
+
+            Debug.WriteLine("Displaying board");
+            int count = 0;
+            for (int i = 0; i < 12 * 12; i++)
+            {
+                Debug.Write(squares[i].Visited + " ");
+                if (++count == 12)
+                {
+                    Debug.Write("\n");
+                    count = 0;
+                }
+            }
+            ViewBag.squares = squares;
+            return View("Game", squares);
+>>>>>>> Mywork4
         }
-        public ActionResult OnButtonClick(string mine)
+
+        [HttpPost]
+        public PartialViewResult OnButtonClick(string mine)
         {
+<<<<<<< HEAD
             mouseClicks++;
+=======
+
+>>>>>>> Mywork4
             int value = Int32.Parse(mine);
             int index = value - 1;
             int r = index / row;
@@ -52,10 +124,14 @@ namespace Minesweeper_Web_Application.Controllers
 
             if (squares[index].Bomb == 9)
             {
+<<<<<<< HEAD
                 MineSweeperLogger.GetInstance().Info(new JavaScriptSerializer().Serialize(UserManagement.Instance._loggedUser.UserName + " has lost a game"));
 
                 ViewBag.squares = squares;
                 return View("Loser");
+=======
+                EndGame("Lose");
+>>>>>>> Mywork4
             }
             else
             {
@@ -74,6 +150,7 @@ namespace Minesweeper_Web_Application.Controllers
 
             if(squaresRemaining == numofBombs)
             {
+<<<<<<< HEAD
                 MineSweeperLogger.GetInstance().Info(new JavaScriptSerializer().Serialize(UserManagement.Instance._loggedUser.UserName + " has won a game"));
 
                 TimeSpan elapsed = (DateTime.Now - startTime);
@@ -85,18 +162,63 @@ namespace Minesweeper_Web_Application.Controllers
 
                 LeaderBoardService service = new LeaderBoardService();
                 service.InsertHighScore(UserManagement.Instance._loggedUser, finalTime, mouseClicks);
+=======
+                EndGame("Win");
+            }
+>>>>>>> Mywork4
 
-                ViewBag.squares = squares;
+            return PartialView("_UpdateGame", squares);
+        }
+        public ActionResult EndGame(string finish)
+        {
+            GameDAO gameDAO = new GameDAO();
+            gameDAO.DeleteScore(UserManagement.Instance._loggedUser);
+            if (finish == "Win")
+            {
                 return View("Winner");
             }
-
-            return View("Game");
+            else {
+                return View("Loser");
+            }
         }
 
-        //Added this so we have it to post a flag on a right-click of an open space
-        public ActionResult OnButtonRightClick(string flagSpace)
+        public ActionResult SaveGame()
         {
-            return View("Game");
+            int num = 0;
+            for(int i = 0; i < squares.Count; i++)
+            {
+                if(!squares[i].Visited)
+                {
+                    num++;
+                }
+            }
+
+            Debug.WriteLine("REMAINING CELLS! " + num);
+
+            //Debug.WriteLine("BEFORE CONVERSION: " + board.SaveBomb1 + board.SaveBomb2 + board.SaveBomb3 + board.SaveBomb4
+            //   + board.SaveVisited1 + board.SaveVisited2 + board.SaveVisited3 + board.SaveVisited4);
+
+
+            Debug.WriteLine("Displaying board");
+            int count = 0;
+            for (int i = 0; i < 12 * 12; i++)
+            {
+                Debug.Write(squares[i].Visited + " ");
+                if (++count == 12)
+                {
+                    Debug.Write("\n");
+                    count = 0;
+                }
+            }
+
+            Debug.WriteLine(Environment.NewLine);
+            board.ConvertBombToInt(board, squares);
+            board.ConvertVisitedToInt(board, squares);
+
+            GameDAO testing = new GameDAO();
+            testing.SaveGameBombs(board, UserManagement.Instance._loggedUser);
+            
+            return RedirectToAction("MainPage", "Home");
         }
     }
 }

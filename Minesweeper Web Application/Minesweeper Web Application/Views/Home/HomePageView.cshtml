@@ -32,13 +32,10 @@
                         @Html.RadioButton("Selection", "Play", new { @checked = true })
                         @Html.Label("New Game")
                     </div>
-
-                    <!-- Radio button for saved game; will be used in later implementation -->
                     <div class="col-md90">
-                        @Html.RadioButton("Selection", "Continue_Play")
-                        @Html.Label("Continue Game")
+                        @Html.RadioButton("Selection", "Load", new { @checked = true })
+                        @Html.Label("Load Game")
                     </div>
-
                     <div class="col-md90">
                         @Html.RadioButton("Selection", "HighScores")
                         @Html.Label("View High Scores")
@@ -50,6 +47,10 @@
                     <div class="col-md90">
                         @Html.RadioButton("Selection", "Logout")
                         @Html.Label("Logout")
+                    </div>
+                    <div class="col-md90">
+                        @Html.RadioButton("Selection", "Delete")
+                        @Html.Label("DELETE SAVE")
                     </div>
                 </div>
                 <input type="submit" value="Select" class="btn btn-default" />

@@ -28,17 +28,15 @@
             text-align: center;
             width: 300px;
         }
-
-        tr:nth-child(2) 
-        {
+        tr:nth-child(2) {
             background-color: gold;
         }
-        tr:nth-child(3)
-        {
+
+        tr:nth-child(3) {
             background-color: silver;
         }
-        tr:nth-child(4)
-        {
+
+        tr:nth-child(4) {
             background-color: #cd7f32;
         }
     </style>
@@ -66,23 +64,24 @@
             }
         </style>
 
-        <table style="background-color: lightcyan; border: 5px solid black;">
+        <table style = "background-color: lightcyan; border: 5px solid black;">
             <tr>
                 <th scope="col">Rank</th>
                 <th scope="col">Username</th>
                 <th scope="col">Score - Seconds</th>
-                <th scope="col">Total Clicks</th>
             </tr>
 
-            @foreach (var data in Model)
+            @foreach(var data in Model)
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => data.Rank)</td>
                     <td>@Html.DisplayFor(modelItem => data.Username)</td>
                     <td>@Html.DisplayFor(modelItem => data.Time)</td>
-                    <td>@Html.DisplayFor(modelItem => data.TotalClicks)</td>
                 </tr>
             }
+
+           
+
         </table>
     </div>
 </div>

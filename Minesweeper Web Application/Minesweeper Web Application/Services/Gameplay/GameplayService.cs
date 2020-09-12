@@ -126,7 +126,7 @@ namespace Minesweeper_Web_Application.Services.Gameplay
 
         public GameSquareModel[,] ChoiceIteration(GameSquareModel[,] input, int row, int col)
         {
-            Debug.WriteLine("Firing ChoiceIteration method. Row: " + row + " Col: " + col);
+            //Debug.WriteLine("Firing ChoiceIteration method. Row: " + row + " Col: " + col);
             if(input[row, col].Reveal == 0 && input[row, col].Visited == false)
             {
                 input[row, col].Visited = true;

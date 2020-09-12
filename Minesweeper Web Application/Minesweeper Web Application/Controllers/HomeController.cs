@@ -1,5 +1,6 @@
 ﻿using Minesweeper_Web_Application.Models;
 using Minesweeper_Web_Application.Services.Business;
+using Minesweeper_Web_Application.Services.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,12 +37,23 @@ namespace Minesweeper_Web_Application.Controllers
             {
                 case "Play":
                     return RedirectToAction("Index", "Game");
+<<<<<<< HEAD
                 
                 case "HighScores":
                     List<LeaderBoard> dataScores = new List<LeaderBoard>();
                     LeaderBoardService service = new LeaderBoardService();
                     //This commented call exists only for testing purposes. 
                     //service.InsertHighScore(UserManagement.Instance._loggedUser, 251.34m);
+=======
+
+                case "Load":
+                    return RedirectToAction("LoadGame", "Game");
+
+                case "HighScores":
+                    List<LeaderBoard> dataScores = new List<LeaderBoard>();
+                    LeaderBoardService service = new LeaderBoardService();
+
+>>>>>>> Mywork4
                     dataScores = service.GetScores(dataScores);
                     return View("HighScores", dataScores);
                     
@@ -49,8 +61,11 @@ namespace Minesweeper_Web_Application.Controllers
                     return View("UserProfile", UserManagement.Instance._loggedUser);
                     
                 case "Logout":
+<<<<<<< HEAD
+=======
+                    Debug.WriteLine("Logged user: " + UserManagement.Instance._loggedUser.UserName);
+>>>>>>> Mywork4
                     UserManagement.Instance.LogOutUser();
-
                     if(UserManagement.Instance._loggedUser != null)
                     {
                         Debug.WriteLine("Logged user: " + UserManagement.Instance._loggedUser.UserName);
@@ -67,6 +82,11 @@ namespace Minesweeper_Web_Application.Controllers
                     }
                     break;
 
+                case "Delete":
+                    GameDAO gameDAO = new GameDAO();
+                    gameDAO.DeleteScore(UserManagement.Instance._loggedUser);
+                    return View("HomePageView");
+
                 default:
                     break;
                     
@@ -76,7 +96,7 @@ namespace Minesweeper_Web_Application.Controllers
 
         private ActionResult ViewGameBoard()
         {
-            return View("/Views/Game/Game.cshtml");
+            return PartialView("/Views/Game/Game.cshtml");
         }
     }
 }
