@@ -30,6 +30,7 @@ namespace Minesweeper_Web_Application.Controllers
             board = new GameBoardModel(squares, row, col);
             board.PlaceBombs(squares, numofBombs);
             board.BombToString(squares);
+            ViewBag.squares = squares;
             return View("Game", squares);
         }
 
@@ -80,7 +81,7 @@ namespace Minesweeper_Web_Application.Controllers
                     count = 0;
                 }
             }
-
+            ViewBag.squares = squares;
             return View("Game", squares);
         }
 

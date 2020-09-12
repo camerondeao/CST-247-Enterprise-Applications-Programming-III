@@ -36,12 +36,21 @@ namespace Minesweeper_Web_Application.Controllers
             {
                 case "Play":
                     return RedirectToAction("Index", "Game");
-                case "HighScores":
-                    return View("HighScores");
+
                 case "Load":
                     return RedirectToAction("LoadGame", "Game");
+
+                case "HighScores":
+                    List<LeaderBoard> dataScores = new List<LeaderBoard>();
+                    LeaderBoardService service = new LeaderBoardService();
+
+                    dataScores = service.GetScores(dataScores);
+
+                    return View("HighScores", dataScores);
+
                 case "Profile":
                     return View("UserProfile", UserManagement.Instance._loggedUser);
+
                 case "Logout":
                     Debug.WriteLine("Logged user: " + UserManagement.Instance._loggedUser.UserName);
                     UserManagement.Instance.LogOutUser();
@@ -54,10 +63,12 @@ namespace Minesweeper_Web_Application.Controllers
                         Debug.WriteLine("No user is logged into the application");
                     }
                     return RedirectToAction("Index", "Login");
+
                 case "Delete":
                     GameDAO gameDAO = new GameDAO();
                     gameDAO.DeleteScore(UserManagement.Instance._loggedUser);
                     return View("HomePageView");
+
                 default:
                     break;
             }
