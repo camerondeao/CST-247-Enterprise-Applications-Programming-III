@@ -9,10 +9,10 @@ using System.IO;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using Minesweeper_Web_Application.Services.Business;
-<<<<<<< HEAD
 using NLog;
-=======
->>>>>>> 5fe7e8fabf7ea13a0952032f1716bcbee315e97d
+using Minesweeper_Web_Application.Services.Utility;
+using System.Web.Script.Serialization;
+using System.Reflection;
 
 namespace Minesweeper_Web_Application.Controllers
 {
@@ -27,20 +27,9 @@ namespace Minesweeper_Web_Application.Controllers
         public static List<GameSquareModel> squares = null;
         public static DateTime startTime;
 
-<<<<<<< HEAD
-        //Logger variables
-        Logger logger = LogManager.GetLogger("fileLogger");
-        readonly ArithmeticException ex;
-
         public ActionResult Index()
         {
-            //Log to logfile
-            logger.Error(ex, "User started new game");
-
-=======
-        public ActionResult Index()
-        {
->>>>>>> 5fe7e8fabf7ea13a0952032f1716bcbee315e97d
+            MineSweeperLogger.GetInstance().Info(new JavaScriptSerializer().Serialize(UserManagement.Instance._loggedUser.UserName + " has started a game"));
             startTime = DateTime.Now;
             squares = new List<GameSquareModel>();
             board = new GameBoardModel(squares, row, col);
@@ -60,23 +49,16 @@ namespace Minesweeper_Web_Application.Controllers
 
             if (squares[index].Bomb == 9)
             {
-                //Log to logfile
-                logger.Error(ex, "User lost game");
+                MineSweeperLogger.GetInstance().Info(new JavaScriptSerializer().Serialize(UserManagement.Instance._loggedUser.UserName + " has lost a game"));
 
                 ViewBag.squares = squares;
                 return View("Loser");
             }
             else
             {
-                //Log to logfile
-                logger.Error(ex, "User made move");
-
                 board.ViewChoice(squares, r, c);
                 ViewBag.squares = squares;
             }
-
-            //Log to logfile
-            logger.Error(ex, "Calculating remaining spaces");
 
             for (int i = 0; i < row * col; i++)
             {
@@ -89,20 +71,11 @@ namespace Minesweeper_Web_Application.Controllers
 
             if(squaresRemaining == numofBombs)
             {
-<<<<<<< HEAD
-                //Log to logfile
-                logger.Error(ex, "User won game");
+                MineSweeperLogger.GetInstance().Info(new JavaScriptSerializer().Serialize(UserManagement.Instance._loggedUser.UserName + " has won a game"));
 
                 TimeSpan elapsed = (DateTime.Now - startTime);
                 decimal finalTime = Math.Round((decimal)elapsed.TotalSeconds, 2);
 
-                //This line gave me an error when testing the Logging services -- FYI
-                //Not sure if it has to do with backspacing to complete the board or not
-=======
-                TimeSpan elapsed = (DateTime.Now - startTime);
-                decimal finalTime = Math.Round((decimal)elapsed.TotalSeconds, 2);
-
->>>>>>> 5fe7e8fabf7ea13a0952032f1716bcbee315e97d
                 Debug.WriteLine(String.Format("{0} start time, {1] end time", startTime, DateTime.Now));
                 Debug.WriteLine("Difference in time.");
                 Debug.WriteLine(String.Format("{0} days, {1} hours, {2} minutes, {3} seconds", elapsed.Days, elapsed.Hours, elapsed.Minutes, elapsed.Seconds));
@@ -120,9 +93,6 @@ namespace Minesweeper_Web_Application.Controllers
         //Added this so we have it to post a flag on a right-click of an open space
         public ActionResult OnButtonRightClick(string flagSpace)
         {
-            //Log to logfile
-            logger.Error(ex, "User right-clicked on space");
-
             return View("Game");
         }
     }

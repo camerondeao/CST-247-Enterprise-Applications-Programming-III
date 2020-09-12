@@ -7,21 +7,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NLog;
+using Minesweeper_Web_Application.Services.Utility;
+using System.Reflection;
+using System.Web.Script.Serialization;
 
 namespace Minesweeper_Web_Application.Controllers
 {
     public class LoginController : Controller
     {
-        //Logger variables
-        Logger logger = LogManager.GetLogger("fileLogger");
-        readonly ArithmeticException ex;
-
         // GET: Login
         public ActionResult Index()
-        {
-            //Log to logfile
-            logger.Error(ex, "User on login page");
-
+        {   
             return View("Login");
         }
 
@@ -38,10 +34,7 @@ namespace Minesweeper_Web_Application.Controllers
 
             if (results)
             {
-                //Log to logfile
-                logger.Error(ex, "User logged in successfully");
-
-                //UserManagement.Instance._loggedUser = model;
+                MineSweeperLogger.GetInstance().Info(model.Username.ToString() + " has logged into the application");
                 Debug.WriteLine("Logged in User: " + UserManagement.Instance._loggedUser.UserName);
                 Debug.WriteLine("Login passed!");
                 //return View("LoginPassed");
@@ -49,12 +42,7 @@ namespace Minesweeper_Web_Application.Controllers
             }
             else
             {
-<<<<<<< HEAD
-                //Log to logfile
-                logger.Error(ex, "User could not log in");
-
-=======
->>>>>>> 5fe7e8fabf7ea13a0952032f1716bcbee315e97d
+                MineSweeperLogger.GetInstance().Warning(model.Username.ToString() + " has failed a login attempt");
                 Debug.WriteLine("Login failed!");
                 return View("LoginFailed");
             }

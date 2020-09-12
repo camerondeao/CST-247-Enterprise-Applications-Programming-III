@@ -1,5 +1,6 @@
 ﻿using Minesweeper_Web_Application.Models;
 using Minesweeper_Web_Application.Services.Business;
+using Minesweeper_Web_Application.Services.Utility;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -7,6 +8,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -39,6 +41,7 @@ namespace Minesweeper_Web_Application.Services.Data
             catch (SqlException e)
             {
                 Debug.WriteLine("Error generated. Details: " + e.ToString());
+                MineSweeperLogger.GetInstance().Error(e, "An error occurred.", this.GetType().Name, MethodBase.GetCurrentMethod().Name);
             }
             finally
             {
@@ -82,6 +85,7 @@ namespace Minesweeper_Web_Application.Services.Data
             catch (SqlException e)
             {
                 Debug.WriteLine("Error generated. Details: " + e.ToString());
+                MineSweeperLogger.GetInstance().Error(e, "An error occurred.", this.GetType().Name, MethodBase.GetCurrentMethod().Name);
             }
             finally
             {
@@ -138,6 +142,7 @@ namespace Minesweeper_Web_Application.Services.Data
             catch(SqlException e)
             {
                 Debug.WriteLine("Error generated in retrieval. Details: " + e.ToString());
+                MineSweeperLogger.GetInstance().Error(e, "An error occurred.", this.GetType().Name, MethodBase.GetCurrentMethod().Name);
             }
             finally
             {

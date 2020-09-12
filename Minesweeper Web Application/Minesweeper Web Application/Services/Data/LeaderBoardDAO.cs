@@ -1,14 +1,12 @@
 ﻿using Minesweeper_Web_Application.Models;
-using Minesweeper_Web_Application.Services.Business;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Web.UI.WebControls;
+using Minesweeper_Web_Application.Services.Utility;
+using System.Web.Script.Serialization;
+using System;
+using System.Reflection;
 
 namespace Minesweeper_Web_Application.Services.Data
 {
@@ -36,12 +34,12 @@ namespace Minesweeper_Web_Application.Services.Data
 
                 conn.Open();
                 command.ExecuteNonQuery();
-
-                Debug.WriteLine("Inserted successfully!");
+                MineSweeperLogger.GetInstance().Info("Inserted high score for user: " + new JavaScriptSerializer().Serialize(user.UserName));
             }
             catch(SqlException e)
             {
                 Debug.WriteLine("An error has occurred. Details: " + e.ToString());
+                MineSweeperLogger.GetInstance().Error(e, "An error occurred.");
             }
             finally
             {
@@ -86,6 +84,7 @@ namespace Minesweeper_Web_Application.Services.Data
             catch(SqlException e)
             {
                 Debug.WriteLine("An error has occurred. Details: " + e.ToString());
+                MineSweeperLogger.GetInstance().Error(e, "An error occurred.");
             }
             finally
             {
@@ -126,6 +125,7 @@ namespace Minesweeper_Web_Application.Services.Data
             catch(SqlException e)
             {
                 Debug.WriteLine("Error generated. Details: " + e.ToString());
+                MineSweeperLogger.GetInstance().Error(e, "An error occurred.");
             }
             finally
             {
@@ -149,11 +149,12 @@ namespace Minesweeper_Web_Application.Services.Data
                 conn.Open();
                 command.ExecuteNonQuery();
 
-                Debug.WriteLine("UPDATED DATA");
+                MineSweeperLogger.GetInstance().Info("Updated high score for user: " + username + " " + time.ToString());
             }
             catch(SqlException e)
             {
                 Debug.WriteLine("Error generated. Details: " + e.ToString());
+                MineSweeperLogger.GetInstance().Error(e, "An error occurred.");
             }
             finally
             {

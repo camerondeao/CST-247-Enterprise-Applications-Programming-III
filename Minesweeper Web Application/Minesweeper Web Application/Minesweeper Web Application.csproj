@@ -60,6 +60,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -160,6 +161,8 @@
     <Compile Include="Services\Data\LeaderBoardDAO.cs" />
     <Compile Include="Services\Data\SecurityDAO.cs" />
     <Compile Include="Services\Gameplay\GameplayService.cs" />
+    <Compile Include="Services\Utility\ILogger.cs" />
+    <Compile Include="Services\Utility\MineSweeperLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
