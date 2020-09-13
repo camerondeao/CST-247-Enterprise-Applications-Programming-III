@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using NLog;
+using Minesweeper_Web_Application.Services.Utility;
 
 namespace Minesweeper_Web_Application.Controllers
 {
@@ -62,22 +63,9 @@ namespace Minesweeper_Web_Application.Controllers
                     
                 case "Logout":
                     Debug.WriteLine("Logged user: " + UserManagement.Instance._loggedUser.UserName);
-                    UserManagement.Instance.LogOutUser();
-                    if(UserManagement.Instance._loggedUser != null)
-                    {
-                        Debug.WriteLine("Logged user: " + UserManagement.Instance._loggedUser.UserName);
-                        UserManagement.Instance.LogOutUser();
-                        if (UserManagement.Instance._loggedUser != null)
-                        {
-                            Debug.WriteLine("Logged user: " + UserManagement.Instance._loggedUser.UserName);
-                        }
-                        else
-                        {
-                            Debug.WriteLine("No user is logged into the application");
-                        }
-                        return RedirectToAction("Index", "Login");
-                    }
-                    break;
+                    MineSweeperLogger.GetInstance().Info(String.Format("{0} has logged out of the application", UserManagement.Instance._loggedUser.UserName));
+                    UserManagement.Instance.LogOutUser(); 
+                    return RedirectToAction("Index", "Login");
 
                 case "Delete":
                     //GameDAO gameDAO = new GameDAO();
