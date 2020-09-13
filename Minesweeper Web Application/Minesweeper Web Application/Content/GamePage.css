@@ -1,19 +1,12 @@
-﻿ .grid {
-    margin:auto;
-    display: inline-grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto;
-    grid-column-gap: 1px;
-    grid-row-gap: 1px;
+﻿.grid {
+    margin: auto;
+    display: grid;
+    width: 480px;
+    grid-template-columns: repeat(12, 40px);
+    grid-template-rows: repeat(12, 30px);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
     background: gray;
-    text-align:center
-
-}
-.gallery_item {
-    border: 1px solid black;
-    width: 1px;
-    height: 1px;
-    object-fit: cover;
-    border: 1px solid black;
+    text-align: center
 }
 

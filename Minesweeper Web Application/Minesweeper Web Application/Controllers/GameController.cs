@@ -39,7 +39,7 @@ namespace Minesweeper_Web_Application.Controllers
             board.PlaceBombs(squares, numofBombs);
             board.BombToString(squares);
             ViewBag.squares = squares;
-            return View("Game", squares);
+            return View("Game");
         }
 
         public ActionResult LoadGame()
@@ -62,7 +62,6 @@ namespace Minesweeper_Web_Application.Controllers
             board.SaveVisited4 = values[7];
             mouseClicks = (int)values[8];
 
-            Debug.WriteLine("INC MOUSE CLICKS: " + mouseClicks);
             board.ConvertBombToList(board, squares);
             board.ConvertVisitedToList(board, squares);
 
@@ -81,7 +80,6 @@ namespace Minesweeper_Web_Application.Controllers
             board.BombToString(squares);
 
             Debug.WriteLine(startTime);
-            //mouseClicks = 0;
 
             Debug.WriteLine("Displaying board");
             int count = 0;
@@ -95,11 +93,11 @@ namespace Minesweeper_Web_Application.Controllers
                 }
             }
             ViewBag.squares = squares;
-            return View("Game", squares);
+            return View("Game");
         }
 
         [HttpPost]
-        public PartialViewResult OnButtonClick(string mine)
+        public ActionResult OnButtonClick(string mine)
         {
             mouseClicks++;
 
@@ -111,10 +109,8 @@ namespace Minesweeper_Web_Application.Controllers
 
             if (squares[index].Bomb == 9)
             {
-                MineSweeperLogger.GetInstance().Info(String.Format("{0} has lost a game.", UserManagement.Instance._loggedUser.UserName));
                 ViewBag.squares = squares;
-                //return View("Loser");
-                EndGame("Lose");
+                return EndGame("Lose");
             }
             else
             {
@@ -133,8 +129,6 @@ namespace Minesweeper_Web_Application.Controllers
 
             if(squaresRemaining == numofBombs)
             {
-                MineSweeperLogger.GetInstance().Info(String.Format("{0} has won a game.", UserManagement.Instance._loggedUser.UserName));
-
                 TimeSpan elapsed = (DateTime.Now - startTime);
                 decimal finalTime = Math.Round((decimal)elapsed.TotalSeconds, 2);
 
@@ -144,21 +138,27 @@ namespace Minesweeper_Web_Application.Controllers
 
                 LeaderBoardService service = new LeaderBoardService();
                 service.InsertHighScore(UserManagement.Instance._loggedUser, finalTime, mouseClicks);
-                EndGame("Win");
+                return EndGame("Win");
             }
 
-            return PartialView("_UpdateGame", squares);
+            return View("Game");
         }
 
         public ActionResult EndGame(string finish)
         {
             GameDAO gameDAO = new GameDAO();
             gameDAO.DeleteScore(UserManagement.Instance._loggedUser);
+
             if (finish == "Win")
             {
+                MineSweeperLogger.GetInstance().Info(String.Format("{0} has won a game.", UserManagement.Instance._loggedUser.UserName));
+                ViewBag.squares = squares;
                 return View("Winner");
             }
-            else {
+            else 
+            {
+                MineSweeperLogger.GetInstance().Info(String.Format("{0} has lost a game.", UserManagement.Instance._loggedUser.UserName));
+                ViewBag.squares = squares;
                 return View("Loser");
             }
         }

@@ -8,11 +8,6 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
-
-    <!--<div name="updateInfo ">
-        @Html.Partial("~/Views/Shared/_UpdateGame.cshtml", Model)
-    </div>-->
-
     <div style="text-align:center; font-family:Arial; font-size:24pt; font-weight:bold; ">
         @Html.Label("Play a game of MineSweeper")
     </div>
@@ -103,6 +98,9 @@
         </div>
     }
     <br />
-    <input type="submit" value="Save Game" />
+    @using (Html.BeginForm("SaveGame", "Game"))
+    {
+        <input type="submit" value="Save Game" />
+    }
 </body>
 </html>
