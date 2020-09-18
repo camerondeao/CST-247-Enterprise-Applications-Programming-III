@@ -15,6 +15,7 @@ using Minesweeper_Web_Application.Services.Utility;
 
 namespace Minesweeper_Web_Application.Controllers
 {
+    [HandleError]
     public class HomeController : Controller
     {
         // GET: Home
@@ -26,9 +27,19 @@ namespace Minesweeper_Web_Application.Controllers
         //GET: MainPage
         public ActionResult MainPage()
         {
+            //List<object> testing = new List<object>();
+            //testing.Add(1);
+            //testing.Add(1.2);
+            //testing.Add(UserManagement.Instance._loggedUser);
             return View("HomePageView", UserManagement.Instance._loggedUser);
         }
 
+        public ActionResult MainNoUser()
+        {
+            
+            return View("HomeNoUser");
+        }
+        
         [HttpPost]
         public ActionResult GetSelectedOption(FormCollection choice)
         {
@@ -38,12 +49,20 @@ namespace Minesweeper_Web_Application.Controllers
             switch (result)
             {
                 case "Play":
-                    return RedirectToAction("Index", "Game");
+                    if (!CheckUserLogin())
+                    {
+                        throw new Exception("Exception occurred.");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Game");
+                    }
                     
                 case "Load":
                     
                     if (!gameDAO.CheckIfScoreExists(UserManagement.Instance._loggedUser))
                     {
+                        ModelState.AddModelError(string.Empty, "No save exists!");
                         return View("HomePageView", UserManagement.Instance._loggedUser);
                     }
                     else
@@ -54,12 +73,18 @@ namespace Minesweeper_Web_Application.Controllers
                 case "HighScores":
                     List<LeaderBoard> dataScores = new List<LeaderBoard>();
                     LeaderBoardService service = new LeaderBoardService();
-
                     dataScores = service.GetScores(dataScores);
                     return View("HighScores", dataScores);
-                    
+
                 case "Profile":
-                    return View("UserProfile", UserManagement.Instance._loggedUser);
+                    if (!CheckUserLogin())
+                    {
+                        throw new Exception("Exception occurred.");
+                    }
+                    else
+                    {
+                        return View("UserProfile", UserManagement.Instance._loggedUser);
+                    }
                     
                 case "Logout":
                     Debug.WriteLine("Logged user: " + UserManagement.Instance._loggedUser.UserName);
@@ -68,9 +93,8 @@ namespace Minesweeper_Web_Application.Controllers
                     return RedirectToAction("Index", "Login");
 
                 case "Delete":
-                    //GameDAO gameDAO = new GameDAO();
                     gameDAO.DeleteScore(UserManagement.Instance._loggedUser);
-                    return View("HomePageView");
+                    return View("HomePageView", UserManagement.Instance._loggedUser);
 
                 default:
                     break;
@@ -79,9 +103,16 @@ namespace Minesweeper_Web_Application.Controllers
             return View("HomePageView");
         }
 
-        private ActionResult ViewGameBoard()
+        private bool CheckUserLogin()
         {
-            return PartialView("/Views/Game/Game.cshtml");
+            if (UserManagement.Instance._loggedUser == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

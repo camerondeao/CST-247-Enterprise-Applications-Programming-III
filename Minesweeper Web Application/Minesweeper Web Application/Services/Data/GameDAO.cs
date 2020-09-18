@@ -14,7 +14,7 @@ namespace Minesweeper_Web_Application.Services.Data
         readonly string connectionStr = "Data Source=(localdb)\\MSSQLLocalDB;initial catalog=cst247_minesweeper ;Integrated Security=True;";
         SqlConnection conn = null;
 
-        public bool SaveGameBombs(GameBoardModel board, UserModel user, int totalClicks)
+        public bool SaveGameBombs(GameBoardModel board, UserModel user, int totalClicks, decimal time)
         {
             bool saved = false;
             EstablishConnection();
@@ -23,26 +23,26 @@ namespace Minesweeper_Web_Application.Services.Data
             {
                 if(!CheckIfScoreExists(user))
                 {
-                    NewUserScore(board, user, totalClicks);
+                    NewUserScore(board, user, totalClicks, time);
                 }
                 else
                 {
-                    UpdateUserScore(board, user, totalClicks);
+                    UpdateUserScore(board, user, totalClicks, time);
                 }
             }
             else
             {
-                InsertUserScore(board, user, totalClicks);
+                InsertUserScore(board, user, totalClicks, time);
             }
 
             return saved;
         }
 
-        public void UpdateUserScore(GameBoardModel board, UserModel user, int totalClicks)
+        public void UpdateUserScore(GameBoardModel board, UserModel user, int totalClicks, decimal time)
         {
             string query = "UPDATE dbo.gamestate SET SAVEBOMB1 = @BOMB1, SAVEBOMB2 = @BOMB2, SAVEBOMB3 = @BOMB3, SAVEBOMB4 = @BOMB4, " +
                 "SAVEVISITED1 = @SAVEVISITED1, SAVEVISITED2 = @SAVEVISITED2, SAVEVISITED3 = @SAVEVISITED3, SAVEVISITED4 = @SAVEVISITED4, " +
-                "CURRENTCLICKS = @TOTALCLICKS WHERE USERNAME = @USERNAME";
+                "CURRENTCLICKS = @TOTALCLICKS, TIME = @TIME WHERE USERNAME = @USERNAME";
             SqlCommand command = new SqlCommand(query, conn);
 
             try
@@ -57,9 +57,7 @@ namespace Minesweeper_Web_Application.Services.Data
                 command.Parameters.Add("@SAVEVISITED3", System.Data.SqlDbType.BigInt).Value = board.SaveVisited3;
                 command.Parameters.Add("@SAVEVISITED4", System.Data.SqlDbType.BigInt).Value = board.SaveVisited4;
                 command.Parameters.Add("@TOTALCLICKS", System.Data.SqlDbType.Int).Value = totalClicks;
-
-                Debug.WriteLine("UPDATING Data going into DB: Bomb1:" + board.SaveBomb1 + " Bomb2:" + board.SaveBomb2 + " Bomb3:" + board.SaveBomb3 + " Bomb4:" + board.SaveBomb4 +
-                    " Visited1:" + board.SaveVisited1 + " Visited2:" + board.SaveVisited2 + " Visited3:" + board.SaveVisited3 + " Visted4:" + board.SaveVisited4);
+                command.Parameters.Add("@TIME", System.Data.SqlDbType.Decimal).Value = time;
 
                 MineSweeperLogger.GetInstance().Info(String.Format("Updated board state for {0}.", user.UserName));
 
@@ -78,11 +76,11 @@ namespace Minesweeper_Web_Application.Services.Data
             }
         }
 
-        public void NewUserScore(GameBoardModel board, UserModel user, int totalClicks)
+        public void NewUserScore(GameBoardModel board, UserModel user, int totalClicks, decimal time)
         {
             string query = "UPDATE dbo.gamestate SET SAVEBOMB1 = @BOMB1, SAVEBOMB2 = @BOMB2, SAVEBOMB3 = @BOMB3, SAVEBOMB4 = @BOMB4, " +
                 "SAVEVISITED1 = @SAVEVISITED1, SAVEVISITED2 = @SAVEVISITED2, SAVEVISITED3 = @SAVEVISITED3, SAVEVISITED4 = @SAVEVISITED4, " +
-                "CURRENTCLICKS = @TOTALCLICKS WHERE USERNAME = @USERNAME";
+                "CURRENTCLICKS = @TOTALCLICKS, TIME = @TIME WHERE USERNAME = @USERNAME";
             SqlCommand command = new SqlCommand(query, conn);
 
             try
@@ -97,6 +95,7 @@ namespace Minesweeper_Web_Application.Services.Data
                 command.Parameters.Add("@SAVEVISITED3", System.Data.SqlDbType.BigInt).Value = board.SaveVisited3;
                 command.Parameters.Add("@SAVEVISITED4", System.Data.SqlDbType.BigInt).Value = board.SaveVisited4;
                 command.Parameters.Add("@TOTALCLICKS", System.Data.SqlDbType.Int).Value = totalClicks;
+                command.Parameters.Add("@Time", System.Data.SqlDbType.Decimal).Value = time;
 
                 Debug.WriteLine("Data going into DB: Bomb1:" + board.SaveBomb1 + " Bomb2:" + board.SaveBomb2 + " Bomb3:" + board.SaveBomb3 + " Bomb4:" + board.SaveBomb4+
                     " Visited1:"+board.SaveVisited1 + " Visited2:" + board.SaveVisited2 + " Visited3:" + board.SaveVisited3 + " Visted4:" + board.SaveVisited4);
@@ -120,7 +119,7 @@ namespace Minesweeper_Web_Application.Services.Data
             EstablishConnection();
             string query = "UPDATE dbo.gamestate SET SAVEBOMB1 = @BOMB1, SAVEBOMB2 = @BOMB2, SAVEBOMB3 = @BOMB3, SAVEBOMB4 = @BOMB4, " +
                 "SAVEVISITED1 = @SAVEVISITED1, SAVEVISITED2 = @SAVEVISITED2, SAVEVISITED3 = @SAVEVISITED3, SAVEVISITED4 = @SAVEVISITED4, " +
-                "CURRENTCLICKS = @TOTALCLICKS WHERE USERNAME = @USERNAME";
+                "CURRENTCLICKS = @TOTALCLICKS, TIME = @TIME WHERE USERNAME = @USERNAME";
             SqlCommand command = new SqlCommand(query, conn);
 
             try
@@ -135,6 +134,8 @@ namespace Minesweeper_Web_Application.Services.Data
                 command.Parameters.Add("@SAVEVISITED3", System.Data.SqlDbType.BigInt).Value = 0;
                 command.Parameters.Add("@SAVEVISITED4", System.Data.SqlDbType.BigInt).Value = 0;
                 command.Parameters.Add("@TOTALCLICKS", System.Data.SqlDbType.Int).Value = 0;
+                command.Parameters.Add("@TIME", System.Data.SqlDbType.Decimal).Value = 0;
+
                 conn.Open();
                 command.ExecuteNonQuery();
                 MineSweeperLogger.GetInstance().Info(String.Format("Deleted board state for {0}.", user.UserName));
@@ -150,10 +151,10 @@ namespace Minesweeper_Web_Application.Services.Data
             }
         }
 
-        public void InsertUserScore(GameBoardModel board, UserModel user, int totalClicks)
+        public void InsertUserScore(GameBoardModel board, UserModel user, int totalClicks, decimal time)
         {
-            string query = "INSERT INTO dbo.gamestate (USERNAME, SAVEBOMB1, SAVEBOMB2, SAVEBOMB3, SAVEBOMB4, SAVEVISITED1, SAVEVISITED2, SAVEVISITED3, SAVEVISITED4, CURRENTCLICKS)"
-                + " VALUES (@USERNAME, @SAVEBOMB1, @SAVEBOMB2, @SAVEBOMB3, @SAVEBOMB4, @SAVEVISITED1, @SAVEVISITED2, @SAVEVISITED3, @SAVEVISITED4, @TOTALCLICKS)";
+            string query = "INSERT INTO dbo.gamestate (USERNAME, SAVEBOMB1, SAVEBOMB2, SAVEBOMB3, SAVEBOMB4, SAVEVISITED1, SAVEVISITED2, SAVEVISITED3, SAVEVISITED4, CURRENTCLICKS, TIME)"
+                + " VALUES (@USERNAME, @SAVEBOMB1, @SAVEBOMB2, @SAVEBOMB3, @SAVEBOMB4, @SAVEVISITED1, @SAVEVISITED2, @SAVEVISITED3, @SAVEVISITED4, @TOTALCLICKS, @TIME)";
             SqlCommand command = new SqlCommand(query, conn);
 
             try
@@ -168,6 +169,7 @@ namespace Minesweeper_Web_Application.Services.Data
                 command.Parameters.AddWithValue("@SAVEVISITED3", board.SaveVisited3);
                 command.Parameters.AddWithValue("@SAVEVISITED4", board.SaveVisited4);
                 command.Parameters.AddWithValue("@TOTALCLICKS", totalClicks);
+                command.Parameters.AddWithValue("@Time", time);
 
                 conn.Open();
                 command.ExecuteNonQuery();
@@ -246,7 +248,7 @@ namespace Minesweeper_Web_Application.Services.Data
             return false;
         }
 
-        public List<long> RetrieveUserScore(List<long> inc, UserModel user)
+        public List<object> RetrieveUserScore(List<object> inc, UserModel user)
         {
             EstablishConnection();
             string query = "SELECT * FROM dbo.gamestate WHERE USERNAME = @Username";
@@ -271,6 +273,7 @@ namespace Minesweeper_Web_Application.Services.Data
                         inc.Add(reader.GetInt64(8));
                         inc.Add(reader.GetInt64(9));
                         inc.Add(reader.GetInt32(10));
+                        inc.Add(reader.GetDecimal(11));
                     }
                 }
             }

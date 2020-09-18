@@ -186,6 +186,8 @@
     <Content Include="Views\Game\Winner.cshtml" />
     <Content Include="Views\Game\Loser.cshtml" />
     <Content Include="Views\Shared\_UpdateGame.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Home\HomeNoUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

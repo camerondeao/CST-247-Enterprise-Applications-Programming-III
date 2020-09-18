@@ -29,6 +29,7 @@ namespace Minesweeper_Web_Application.Controllers
         public static List<GameSquareModel> squares = null;
         public static DateTime startTime;
         public static int mouseClicks;
+        public static decimal savedTime = 0;
 
         public ActionResult Index()
         {
@@ -45,22 +46,25 @@ namespace Minesweeper_Web_Application.Controllers
         public ActionResult LoadGame()
         {
             GameDAO gameDAO = new GameDAO();
-            List<long> values = new List<long>();
+            List<object> values = new List<object>();
             squares = new List<GameSquareModel>();
             board = new GameBoardModel(squares, row, col);
 
             values = gameDAO.RetrieveUserScore(values, UserManagement.Instance._loggedUser);
 
-            board.SaveBomb1 = values[0];
-            board.SaveBomb2 = values[1];
-            board.SaveBomb3 = values[2];
-            board.SaveBomb4 = values[3];
+            board.SaveBomb1 = (long)values[0];
+            board.SaveBomb2 = (long)values[1];
+            board.SaveBomb3 = (long)values[2];
+            board.SaveBomb4 = (long)values[3];
 
-            board.SaveVisited1 = values[4];
-            board.SaveVisited2 = values[5];
-            board.SaveVisited3 = values[6];
-            board.SaveVisited4 = values[7];
+            board.SaveVisited1 = (long)values[4];
+            board.SaveVisited2 = (long)values[5];
+            board.SaveVisited3 = (long)values[6];
+            board.SaveVisited4 = (long)values[7];
             mouseClicks = (int)values[8];
+
+            startTime = DateTime.Now;
+            savedTime = (decimal)values[9];
 
             board.ConvertBombToList(board, squares);
             board.ConvertVisitedToList(board, squares);
@@ -130,7 +134,8 @@ namespace Minesweeper_Web_Application.Controllers
             if(squaresRemaining == numofBombs)
             {
                 TimeSpan elapsed = (DateTime.Now - startTime);
-                decimal finalTime = Math.Round((decimal)elapsed.TotalSeconds, 2);
+                decimal calculation = Math.Round((decimal)elapsed.TotalSeconds, 2);
+                decimal finalTime = Decimal.Add(calculation, savedTime);
 
                 Debug.WriteLine(String.Format("{0} start time, {1} end time", startTime, DateTime.Now));
                 Debug.WriteLine("Difference in time.");
@@ -192,8 +197,12 @@ namespace Minesweeper_Web_Application.Controllers
             board.ConvertBombToInt(board, squares);
             board.ConvertVisitedToInt(board, squares);
 
+            TimeSpan elapsed = (DateTime.Now - startTime);
+            decimal newTime = Math.Round((decimal)elapsed.TotalSeconds, 2);
+            decimal finalTime = Decimal.Add(newTime, savedTime);
+
             GameDAO gameDAO = new GameDAO();
-            gameDAO.SaveGameBombs(board, UserManagement.Instance._loggedUser, mouseClicks);
+            gameDAO.SaveGameBombs(board, UserManagement.Instance._loggedUser, mouseClicks, finalTime);
             
             return RedirectToAction("MainPage", "Home");
         }

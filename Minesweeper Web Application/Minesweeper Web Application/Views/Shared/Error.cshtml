@@ -1,0 +1,14 @@
+﻿@{ 
+    ViewBag.Title = "Error";
+}
+<style>
+    div{
+        font-size: 24px;
+    }
+</style>
+
+<div>
+    You must register or log in to an account to utilize this service.<br/>
+    @Html.ActionLink("Register", "Index", "Registration", null, null)<br />
+    @Html.ActionLink("Login", "Index", "Login", null, null)
+</div>

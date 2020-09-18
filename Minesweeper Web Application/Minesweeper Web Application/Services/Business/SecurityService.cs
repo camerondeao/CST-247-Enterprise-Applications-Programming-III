@@ -10,7 +10,7 @@ namespace Minesweeper_Web_Application.Services.Business
     public class UserManagement
     {
         private static UserManagement _instance;
-        public UserModel _loggedUser { get; set; } = new UserModel();
+        public UserModel _loggedUser { get; set; }
 
         private UserManagement() { }
 

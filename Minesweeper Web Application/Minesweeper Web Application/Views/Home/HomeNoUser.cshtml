@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Welcome to the Minesweeper Application!</h2>
+@using (Html.BeginForm("GetSelectedOption", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Please select one of the following options:</h4><hr/>
+            <div class="form-group">
+                <div class="col-md90">
+                    <div class="form-group">
+                        <div class="col-md90">
+                            @Html.RadioButton("Selection", "Play", new { @checked = true})
+                            @Html.Label("New Game")
+                        </div>
+                        <div class="col-md90">
+                            @Html.RadioButton("Selection", "HighScores")
+                            @Html.Label("View High Scores")
+                        </div>
+                        <div class="col-md90">
+                            @Html.RadioButton("Selection", "Profile")
+                            @Html.Label("View Profile")
+                        </div>
+                    </div>
+                    <input type="submit" value="Select" class="btn btn-default"/>
+                </div>
+            </div>
+    </div>
+}
